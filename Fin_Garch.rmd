@@ -24,7 +24,7 @@ read_funds <- function(lf) {
       cond <- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
       if (cond) {
       temp <- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
-      dfs[[f]] <- temp
+      dfs[[f]] <- temp[,c(1,5)]
     }
   }
   return(dfs)
