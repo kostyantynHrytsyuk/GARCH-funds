@@ -1,0 +1,45 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+#setwd('./')
+```
+
+```{r}
+require(dplyr)
+require(ggplot2)
+require(xts)
+require(rugarch)
+require(PerformanceAnalytics)
+require(quantmode)
+```
+
+```{r}
+read_funds <- function(lf) {
+  dfs <- list()
+  for (f in 1:length(lf)) {
+      cond <- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
+      if (cond) {
+      temp <- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
+      dfs[[f]] <- temp
+    }
+  }
+  return(dfs)
+}
+```
+
+```{r}
+vanguard <- read.csv('VTI.csv', stringsAsFactors = FALSE)
+blackrock <- read.csv('BLK.csv')
+statestreet <- read.csv('STT.csv')
+allianz <- read.csv('ALV.DE.csv')
+jpmorgan <- read.csv('JPM.csv')
+bankmellon <- read.csv('BK.csv')
+
+funds <- read_funds(list.files())
+names(funds) <- c('allianz', 'bankmellon' , 'blackrock', 'jpmorgan', 'statestreet', 
+             'vanguard')
+```
