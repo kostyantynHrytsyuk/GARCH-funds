@@ -1749,59 +1749,21 @@ summary {
 
 
 <!-- rnb-text-begin -->
+<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
+<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0d2QoKVxuXG5gYGAifQ== -->
-<pre class="r"><code>getwd()
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiL2hvbWUva29zdHlhXCJcbiJ9 -->
-<pre><code>[1] &quot;/home/kostya&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdC5maWxlcygpXG5cbmBgYCJ9 -->
-<pre class="r"><code>list.files()
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQUxWLkRFLmNzdlwiIFwiQksuY3N2XCIgICAgIFwiQkxLLmNzdlwiICAgIFwiSlBNLmNzdlwiICAgIFwiTElDRU5TRVwiICAgIFwiUkVBRE1FLm1kXCIgIFwiU1RULmNzdlwiICAgXG5bOF0gXCJWVEkuY3N2XCIgICBcbiJ9 -->
-<pre><code>[1] &quot;ALV.DE.csv&quot; &quot;BK.csv&quot;     &quot;BLK.csv&quot;    &quot;JPM.csv&quot;    &quot;LICENSE&quot;    &quot;README.md&quot;  &quot;STT.csv&quot;   
-[8] &quot;VTI.csv&quot;   </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVhZF9mdW5kcyA8LSBmdW5jdGlvbihsZikge1xuICBkZnMgPC0gbGlzdCgpXG4gIGZvciAoZiBpbiAxOmxlbmd0aChsZikpIHtcbiAgICAgIGNvbmQgPC0gc3Vic3RyKGxmW2ZdLCBuY2hhcihsZltmXSktMywgbmNoYXIobGZbZl0pKSA9PSAnLmNzdidcbiAgICAgIGlmIChjb25kKSB7XG4gICAgICB0ZW1wIDwtIGRhdGEuZnJhbWUocmVhZC5jc3YobGZbZl0sIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkpXG4gICAgICBkZnNbW2ZdXSA8LSB0ZW1wWyxjKDEsNSldXG4gICAgfVxuICB9XG4gIHJldHVybihkZnMpXG59XG5gYGAifQ== -->
-<pre class="r"><code>read_funds &lt;- function(lf) {
-  dfs &lt;- list()
-  for (f in 1:length(lf)) {
-      cond &lt;- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
-      if (cond) {
-      temp &lt;- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
-      dfs[[f]] &lt;- temp[,c(1,5)]
-    }
-  }
-  return(dfs)
-}</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
+<pre class="r"><code>plot(cars)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
+<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnKVxuYmxhY2tyb2NrIDwtIHJlYWQuY3N2KCdCTEsuY3N2JylcbnN0YXRlc3RyZWV0IDwtIHJlYWQuY3N2KCdTVFQuY3N2JylcbmFsbGlhbnogPC0gcmVhZC5jc3YoJ0FMVi5ERS5jc3YnKVxuanBtb3JnYW4gPC0gcmVhZC5jc3YoJ0pQTS5jc3YnKVxuYmFua21lbGxvbiA8LSByZWFkLmNzdignQksuY3N2JylcbmBgYCJ9 -->
-<pre class="r"><code>vanguard &lt;- read.csv('VTI.csv')
-blackrock &lt;- read.csv('BLK.csv')
-statestreet &lt;- read.csv('STT.csv')
-allianz &lt;- read.csv('ALV.DE.csv')
-jpmorgan &lt;- read.csv('JPM.csv')
-bankmellon &lt;- read.csv('BK.csv')</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQojc2V0d2QoJy4vJykKYGBgCgpgYGB7cn0KcmVxdWlyZShkcGx5cikKcmVxdWlyZShnZ3Bsb3QyKQpyZXF1aXJlKHh0cykKcmVxdWlyZShydWdhcmNoKQpyZXF1aXJlKFBlcmZvcm1hbmNlQW5hbHl0aWNzKQpyZXF1aXJlKHF1YW50bW9kZSkKYGBgCgpgYGB7cn0KcmVhZF9mdW5kcyA8LSBmdW5jdGlvbihsZikgewogIGRmcyA8LSBsaXN0KCkKICBmb3IgKGYgaW4gMTpsZW5ndGgobGYpKSB7CiAgICAgIGNvbmQgPC0gc3Vic3RyKGxmW2ZdLCBuY2hhcihsZltmXSktMywgbmNoYXIobGZbZl0pKSA9PSAnLmNzdicKICAgICAgaWYgKGNvbmQpIHsKICAgICAgdGVtcCA8LSBkYXRhLmZyYW1lKHJlYWQuY3N2KGxmW2ZdLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpKQogICAgICBkZnNbW2ZdXSA8LSB0ZW1wWyxjKDEsNSldCiAgICB9CiAgfQogIHJldHVybihkZnMpCn0KYGBgCgpgYGB7cn0KdmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCmJsYWNrcm9jayA8LSByZWFkLmNzdignQkxLLmNzdicpCnN0YXRlc3RyZWV0IDwtIHJlYWQuY3N2KCdTVFQuY3N2JykKYWxsaWFueiA8LSByZWFkLmNzdignQUxWLkRFLmNzdicpCmpwbW9yZ2FuIDwtIHJlYWQuY3N2KCdKUE0uY3N2JykKYmFua21lbGxvbiA8LSByZWFkLmNzdignQksuY3N2JykKCmZ1bmRzIDwtIHJlYWRfZnVuZHMobGlzdC5maWxlcygpKQpuYW1lcyhmdW5kcykgPC0gYygnYWxsaWFueicsICdiYW5rbWVsbG9uJyAsICdibGFja3JvY2snLCAnanBtb3JnYW4nLCAnc3RhdGVzdHJlZXQnLCAKICAgICAgICAgICAgICd2YW5ndWFyZCcpCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ3RybCtTaGlmdCtFbnRlciouIAoKYGBge3J9CnBsb3QoY2FycykKYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4KClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4K</div>
 
 
 
@@ -1848,7 +1810,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Fin_Garch.rmd");
+  window.initializeSourceEmbed("filter_data.rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
