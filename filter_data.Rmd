@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+
+# прочитати дані
+vanguard <- read.csv('VTI.csv', stringsAsFactors = FALSE)
+blackrock <- read.csv('BLK.csv')
+statestreet <- read.csv('STT.csv')
+allianz <- read.csv('ALV.DE.csv')
+jpmorgan <- read.csv('JPM.csv')
+bankmellon <- read.csv('BK.csv')
+
+# видалити зайві колонки
+vanguard <- select(vanguard, -c(Open,High,Low,Adj.Close,Volume))
+blackrock <- select(blackrock, -c(Open,High,Low,Adj.Close,Volume))
+statestreet <- select(statestreet, -c(Open,High,Low,Adj.Close,Volume))
+allianz <- select(allianz, -c(Open,High,Low,Adj.Close,Volume))
+jpmorgan <- select(jpmorgan, -c(Open,High,Low,Adj.Close,Volume))
+bankmellon <- select(bankmellon, -c(Open,High,Low,Adj.Close,Volume))
+
+# перейменувати колонки
+colnames(vanguard)[2] <-"vanguard_price"
+colnames(blackrock)[2] <-"blackrock_price"
+colnames(statestreet)[2] <-"statestreet_price"
+colnames(allianz)[2] <-"allianz_price"
+colnames(jpmorgan)[2] <-"jpmorgan_price"
+colnames(bankmellon)[2] <-"bankmellon_price"
+
+# змерджити
+
+funds = merge(x=vanguard,y=blackrock,by="Date",all.x=TRUE)
+funds = merge(x=funds,y=statestreet,by="Date",all.x=TRUE)
+funds = merge(x=funds,y=allianz,by="Date",all.x=TRUE)
+funds = merge(x=funds,y=jpmorgan,by="Date",all.x=TRUE)
+funds = merge(x=funds,y=bankmellon,by="Date",all.x=TRUE)
+
+#View(funds)
+```
+
+```{r}
+write.csv(funds, file = "Funds.csv")
+```
+
+
