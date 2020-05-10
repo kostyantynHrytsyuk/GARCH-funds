@@ -15,6 +15,7 @@ require(xts)
 require(rugarch)
 require(PerformanceAnalytics)
 require(quantmod)
+library(skewt)
 ```
 
 ```{r}
@@ -68,5 +69,112 @@ allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1]
 ```{r}
 View(allianz_ret_ma)
 ```
+```{r}
+df <- read.csv('Funds.csv', stringsAsFactors = F)
+df <- df[,-1]
+df$Date <- as.Date(df$Date)
 
+# Transforming data from df to xts
+xts_df <- xts(df[,2:ncol(df)], order.by = df$Date)
+
+# Subseting original data for April of 2020 year
+xts_df_red <- xts_df['/202004']
+
+```
+
+```{r}
+chart.RollingPerformance(R = xts_df$vanguard_return, width = 22, FUN = "sd.annualized",
+                         scale = 252)
+
+
+alt_p <- rollapply(data = xts_df$vanguard_return, width = 22, FUN = 'sd.annualized', scale = 252)
+
+vanguard_tail_volatility <- tail(alt_p, 6)
+vanguard_tail_volatility
+
+ggplot(alt_p, aes(x = index(alt_p), y = vanguard_return)) + geom_line()
+```
+
+```{r}
+van_mean <- mean(xts_df$vanguard_return)
+van_errors <- xts_df$vanguard_return - van_mean
+
+plot(abs(van_errors))
+
+acf(abs(van_errors))
+```
+
+```{r}
+# In this chunk, prefix van_ - is for Vanguard company
+
+# Forming set of parameters for GARCH model
+# The most important is distribution.model - we are specifying type of distribution 
+van_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+                       variance.model = list(model = 'sGARCH'),
+                       distribution.model = 'norm')
+
+# Apply GARCH model to our data 
+van_fit <- ugarchfit(data = xts_df_red$vanguard_return,
+                     spec = van_spec)
+
+van_fit
+
+van_vol <- sigma(van_fit)
+
+# Predicting volatility for n.ahead periods
+van_forecast <- ugarchforecast(fitORspec = van_fit,
+                               data = van_vol, n.ahead = 6)
+van_forecast
+
+# 252 - number of working days in year
+van_norm_res <- sigma(van_forecast) * sqrt(252)
+van_norm_res
+```
+
+```{r}
+# distribution.model: sstd - Skewed Student t Distribution
+van_sstd_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+                            variance.model = list(model = 'sGARCH'),
+                            distribution.model = 'sstd')
+
+van_sstd_fit <- ugarchfit(data = xts_df_red$vanguard_return,
+                          spec = van_sstd_spec)
+
+van_sstd_fit
+
+van_sstd_vol <- sigma(van_sstd_fit)
+tail(van_sstd_vol, 10)
+
+van_sstd_forecast <- ugarchforecast(fitORspec = van_sstd_fit,
+                                    data = van_sstd_vol, n.ahead = 6)
+
+van_sstd_res <- sigma(van_sstd_forecast) * sqrt(252)
+
+chart.Histogram(residuals(van_sstd_fit, standardize = T),
+                methods = c('add.normal', 'add.density'))
+```
+
+```{r}
+cat('SST for norm\n')
+sum(vanguard_tail_volatility - van_norm_res)
+
+cat('\nSST for sstd\n')
+sum(vanguard_tail_volatility - van_sstd_res)
+
+cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
+```
+
+
+```{r}
+vanguard_std <- (df$vanguard_return - mean(df$vanguard_return))/sd(df$vanguard_return)
+
+ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
+  stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
+                , aes(x = x,colour = 'Normal')) + ylab("") +
+  scale_y_continuous(breaks = NULL) +
+  stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2), 
+                aes(colour = 'Skewed Student t')) +
+  geom_histogram(data = data.frame(x = vanguard_std), aes(y = ..density..), bins = 100, alpha = 0.3)
+
+```
 
