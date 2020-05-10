@@ -1749,21 +1749,92 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
-<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
+<pre class="r"><code>library(dplyr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RwbHlyJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tXG4gIHByaW50LnJvd3dpc2VfZGYgICAgIFxuXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixZHBseXLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnN0YXRz46S847iyOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOmJhc2XjpLzjuLI6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>Registered S3 method overwritten by &#39;dplyr&#39;:
+  method           from
+  print.rowwise_df     
+
+Attaching package: 㤼㸱dplyr㤼㸲
+
+The following objects are masked from 㤼㸱package:stats㤼㸲:
+
+    filter, lag
+
+The following objects are masked from 㤼㸱package:base㤼㸲:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyDQv9GA0L7Rh9C40YLQsNGC0Lgg0LTQsNC90ZZcbnZhbmd1YXJkIDwtIHJlYWQuY3N2KCdWVEkuY3N2Jywgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKVxuYmxhY2tyb2NrIDwtIHJlYWQuY3N2KCdCTEsuY3N2JylcbnN0YXRlc3RyZWV0IDwtIHJlYWQuY3N2KCdTVFQuY3N2JylcbmFsbGlhbnogPC0gcmVhZC5jc3YoJ0FMVi5ERS5jc3YnKVxuanBtb3JnYW4gPC0gcmVhZC5jc3YoJ0pQTS5jc3YnKVxuYmFua21lbGxvbiA8LSByZWFkLmNzdignQksuY3N2JylcblxuYWxsaWFueiA8LSBuYS5vbWl0KGFsbGlhbnopICAjINCy0LjQtNCw0LvQuNGC0Lgg0L/RgNC+0L/Rg9GJ0LXQvdGWINGA0Y/QtNC60LhcblxuIyDQstC40LTQsNC70LjRgtC4INC30LDQudCy0ZYg0LrQvtC70L7QvdC60LhcbnZhbmd1YXJkIDwtIHNlbGVjdCh2YW5ndWFyZCwgLWMoT3BlbixIaWdoLExvdyxBZGouQ2xvc2UsVm9sdW1lKSlcbmJsYWNrcm9jayA8LSBzZWxlY3QoYmxhY2tyb2NrLCAtYyhPcGVuLEhpZ2gsTG93LEFkai5DbG9zZSxWb2x1bWUpKVxuc3RhdGVzdHJlZXQgPC0gc2VsZWN0KHN0YXRlc3RyZWV0LCAtYyhPcGVuLEhpZ2gsTG93LEFkai5DbG9zZSxWb2x1bWUpKVxuYWxsaWFueiA8LSBzZWxlY3QoYWxsaWFueiwgLWMoT3BlbixIaWdoLExvdyxBZGouQ2xvc2UsVm9sdW1lKSlcbmpwbW9yZ2FuIDwtIHNlbGVjdChqcG1vcmdhbiwgLWMoT3BlbixIaWdoLExvdyxBZGouQ2xvc2UsVm9sdW1lKSlcbmJhbmttZWxsb24gPC0gc2VsZWN0KGJhbmttZWxsb24sIC1jKE9wZW4sSGlnaCxMb3csQWRqLkNsb3NlLFZvbHVtZSkpXG5cbiMg0L/QtdGA0LXQudC80LXQvdGD0LLQsNGC0Lgg0LrQvtC70L7QvdC60LhcbmNvbG5hbWVzKHZhbmd1YXJkKVsyXSA8LVwidmFuZ3VhcmRfcHJpY2VcIlxuY29sbmFtZXMoYmxhY2tyb2NrKVsyXSA8LVwiYmxhY2tyb2NrX3ByaWNlXCJcbmNvbG5hbWVzKHN0YXRlc3RyZWV0KVsyXSA8LVwic3RhdGVzdHJlZXRfcHJpY2VcIlxuY29sbmFtZXMoanBtb3JnYW4pWzJdIDwtXCJqcG1vcmdhbl9wcmljZVwiXG5jb2xuYW1lcyhiYW5rbWVsbG9uKVsyXSA8LVwiYmFua21lbGxvbl9wcmljZVwiXG5cbiMg0LfQvNC10YDQtNC20LjRgtC4XG5mdW5kcyA9IG1lcmdlKHg9dmFuZ3VhcmQseT1ibGFja3JvY2ssYnk9XCJEYXRlXCIsYWxsLng9VFJVRSlcbmZ1bmRzID0gbWVyZ2UoeD1mdW5kcyx5PXN0YXRlc3RyZWV0LGJ5PVwiRGF0ZVwiLGFsbC54PVRSVUUpXG5mdW5kcyA9IG1lcmdlKHg9ZnVuZHMseT1qcG1vcmdhbixieT1cIkRhdGVcIixhbGwueD1UUlVFKVxuZnVuZHMgPSBtZXJnZSh4PWZ1bmRzLHk9YmFua21lbGxvbixieT1cIkRhdGVcIixhbGwueD1UUlVFKVxuXG4jINC/0L7RgNCw0YXRg9Cy0LDRgtC4INGA0LXRgtGD0YDQvdC4XG52YW5ndWFyZF9yZXR1cm4gPC0gc2FwcGx5KDE6KG5yb3coZnVuZHMpLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgZnVuZHMkdmFuZ3VhcmRfcHJpY2UpXG5ibGFja3JvY2tfcmV0dXJuIDwtIHNhcHBseSgxOihucm93KGZ1bmRzKS0xKSwgZnVuY3Rpb24oeCwgcCkgeyByZXR1cm4oKHBbeCsxXSAtIHBbeF0pL3BbeF0pIH0sIGZ1bmRzJGJsYWNrcm9jaylcbnN0YXRlc3RyZWV0X3JldHVybiA8LSBzYXBwbHkoMToobnJvdyhmdW5kcyktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kcyRzdGF0ZXN0cmVldClcbmpwbW9yZ2FuX3JldHVybiA8LSBzYXBwbHkoMToobnJvdyhmdW5kcyktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kcyRqcG1vcmdhbilcbmJhbmttZWxsb25fcmV0dXJuIDwtIHNhcHBseSgxOihucm93KGZ1bmRzKS0xKSwgZnVuY3Rpb24oeCwgcCkgeyByZXR1cm4oKHBbeCsxXSAtIHBbeF0pL3BbeF0pIH0sIGZ1bmRzJGJhbmttZWxsb24pXG5cbiMg0LfRltCx0YDQsNGC0Lgg0YDQsNC30L7QvCDRgNC10YLRg9GA0L3QuCA1INGE0L7QvdC00ZbQslxuZnVuZHMgPSBmdW5kc1stMSxdXG5EYXRlID0gZnVuZHMkRGF0ZVxuZnVuZHNfcmV0dXJucyA9IGRhdGEuZnJhbWUoRGF0ZSwgdmFuZ3VhcmRfcmV0dXJuLCBibGFja3JvY2tfcmV0dXJuLCBzdGF0ZXN0cmVldF9yZXR1cm4sIGpwbW9yZ2FuX3JldHVybiwgYmFua21lbGxvbl9yZXR1cm4pXG5cbiMgTmEgICAg0J7QutGA0LXQvNC+INC30L3QsNC50YLQuCDRgNC10YLRg9GA0L3QuCDQtNC70Y8gYWxsaWFuelxuYWxsaWFuel9yZXR1cm4gPC0gc2FwcGx5KDE6KG5yb3coYWxsaWFueiktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBhbGxpYW56JENsb3NlKVxuYWxsaWFuel9tID0gYWxsaWFuelstMSxdXG5EYXRlID0gYWxsaWFuel9tJERhdGVcbmFsbGlhbnpfcmUgPSBkYXRhLmZyYW1lKERhdGUsIGFsbGlhbnpfcmV0dXJuKVxuXG4jINC30ZbQsdGA0LDRgtC4INCy0YHRliDRgNC10YLRg9GA0L3QuCDRgNCw0LfQvtC8XG5mdW5kc19yZXR1cm5zID0gbWVyZ2UoeD1mdW5kc19yZXR1cm5zLHk9YWxsaWFuel9yZSxieT1cIkRhdGVcIixhbGwueD1UUlVFKVxuVmlldyhmdW5kc19yZXR1cm5zKVxuYGBgIn0= -->
+<pre class="r"><code># прочитати дані
+vanguard &lt;- read.csv(&#39;VTI.csv&#39;, stringsAsFactors = FALSE)
+blackrock &lt;- read.csv(&#39;BLK.csv&#39;)
+statestreet &lt;- read.csv(&#39;STT.csv&#39;)
+allianz &lt;- read.csv(&#39;ALV.DE.csv&#39;)
+jpmorgan &lt;- read.csv(&#39;JPM.csv&#39;)
+bankmellon &lt;- read.csv(&#39;BK.csv&#39;)
+
+allianz &lt;- na.omit(allianz)  # видалити пропущені рядки
+
+# видалити зайві колонки
+vanguard &lt;- select(vanguard, -c(Open,High,Low,Adj.Close,Volume))
+blackrock &lt;- select(blackrock, -c(Open,High,Low,Adj.Close,Volume))
+statestreet &lt;- select(statestreet, -c(Open,High,Low,Adj.Close,Volume))
+allianz &lt;- select(allianz, -c(Open,High,Low,Adj.Close,Volume))
+jpmorgan &lt;- select(jpmorgan, -c(Open,High,Low,Adj.Close,Volume))
+bankmellon &lt;- select(bankmellon, -c(Open,High,Low,Adj.Close,Volume))
+
+# перейменувати колонки
+colnames(vanguard)[2] &lt;-&quot;vanguard_price&quot;
+colnames(blackrock)[2] &lt;-&quot;blackrock_price&quot;
+colnames(statestreet)[2] &lt;-&quot;statestreet_price&quot;
+colnames(jpmorgan)[2] &lt;-&quot;jpmorgan_price&quot;
+colnames(bankmellon)[2] &lt;-&quot;bankmellon_price&quot;
+
+# змерджити
+funds = merge(x=vanguard,y=blackrock,by=&quot;Date&quot;,all.x=TRUE)
+funds = merge(x=funds,y=statestreet,by=&quot;Date&quot;,all.x=TRUE)
+funds = merge(x=funds,y=jpmorgan,by=&quot;Date&quot;,all.x=TRUE)
+funds = merge(x=funds,y=bankmellon,by=&quot;Date&quot;,all.x=TRUE)
+
+# порахувати ретурни
+vanguard_return &lt;- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$vanguard_price)
+blackrock_return &lt;- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$blackrock)
+statestreet_return &lt;- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$statestreet)
+jpmorgan_return &lt;- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$jpmorgan)
+bankmellon_return &lt;- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$bankmellon)
+
+# зібрати разом ретурни 5 фондів
+funds = funds[-1,]
+Date = funds$Date
+funds_returns = data.frame(Date, vanguard_return, blackrock_return, statestreet_return, jpmorgan_return, bankmellon_return)
+
+# Na    Окремо знайти ретурни для allianz
+allianz_return &lt;- sapply(1:(nrow(allianz)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, allianz$Close)
+allianz_m = allianz[-1,]
+Date = allianz_m$Date
+allianz_re = data.frame(Date, allianz_return)
+
+# зібрати всі ретурни разом
+funds_returns = merge(x=funds_returns,y=allianz_re,by=&quot;Date&quot;,all.x=TRUE)
+View(funds_returns)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KGZ1bmRzX3JldHVybnMsIGZpbGUgPSBcIkZ1bmRzLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>write.csv(funds_returns, file = &quot;Funds.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ3RybCtTaGlmdCtFbnRlciouIAoKYGBge3J9CnBsb3QoY2FycykKYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4KClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkoZHBseXIpDQoNCiMg0L/RgNC+0YfQuNGC0LDRgtC4INC00LDQvdGWDQp2YW5ndWFyZCA8LSByZWFkLmNzdignVlRJLmNzdicsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkNCmJsYWNrcm9jayA8LSByZWFkLmNzdignQkxLLmNzdicpDQpzdGF0ZXN0cmVldCA8LSByZWFkLmNzdignU1RULmNzdicpDQphbGxpYW56IDwtIHJlYWQuY3N2KCdBTFYuREUuY3N2JykNCmpwbW9yZ2FuIDwtIHJlYWQuY3N2KCdKUE0uY3N2JykNCmJhbmttZWxsb24gPC0gcmVhZC5jc3YoJ0JLLmNzdicpDQoNCmFsbGlhbnogPC0gbmEub21pdChhbGxpYW56KSAgIyDQstC40LTQsNC70LjRgtC4INC/0YDQvtC/0YPRidC10L3RliDRgNGP0LTQutC4DQoNCiMg0LLQuNC00LDQu9C40YLQuCDQt9Cw0LnQstGWINC60L7Qu9C+0L3QutC4DQp2YW5ndWFyZCA8LSBzZWxlY3QodmFuZ3VhcmQsIC1jKE9wZW4sSGlnaCxMb3csQWRqLkNsb3NlLFZvbHVtZSkpDQpibGFja3JvY2sgPC0gc2VsZWN0KGJsYWNrcm9jaywgLWMoT3BlbixIaWdoLExvdyxBZGouQ2xvc2UsVm9sdW1lKSkNCnN0YXRlc3RyZWV0IDwtIHNlbGVjdChzdGF0ZXN0cmVldCwgLWMoT3BlbixIaWdoLExvdyxBZGouQ2xvc2UsVm9sdW1lKSkNCmFsbGlhbnogPC0gc2VsZWN0KGFsbGlhbnosIC1jKE9wZW4sSGlnaCxMb3csQWRqLkNsb3NlLFZvbHVtZSkpDQpqcG1vcmdhbiA8LSBzZWxlY3QoanBtb3JnYW4sIC1jKE9wZW4sSGlnaCxMb3csQWRqLkNsb3NlLFZvbHVtZSkpDQpiYW5rbWVsbG9uIDwtIHNlbGVjdChiYW5rbWVsbG9uLCAtYyhPcGVuLEhpZ2gsTG93LEFkai5DbG9zZSxWb2x1bWUpKQ0KDQojINC/0LXRgNC10LnQvNC10L3Rg9Cy0LDRgtC4INC60L7Qu9C+0L3QutC4DQpjb2xuYW1lcyh2YW5ndWFyZClbMl0gPC0idmFuZ3VhcmRfcHJpY2UiDQpjb2xuYW1lcyhibGFja3JvY2spWzJdIDwtImJsYWNrcm9ja19wcmljZSINCmNvbG5hbWVzKHN0YXRlc3RyZWV0KVsyXSA8LSJzdGF0ZXN0cmVldF9wcmljZSINCmNvbG5hbWVzKGpwbW9yZ2FuKVsyXSA8LSJqcG1vcmdhbl9wcmljZSINCmNvbG5hbWVzKGJhbmttZWxsb24pWzJdIDwtImJhbmttZWxsb25fcHJpY2UiDQoNCiMg0LfQvNC10YDQtNC20LjRgtC4DQpmdW5kcyA9IG1lcmdlKHg9dmFuZ3VhcmQseT1ibGFja3JvY2ssYnk9IkRhdGUiLGFsbC54PVRSVUUpDQpmdW5kcyA9IG1lcmdlKHg9ZnVuZHMseT1zdGF0ZXN0cmVldCxieT0iRGF0ZSIsYWxsLng9VFJVRSkNCmZ1bmRzID0gbWVyZ2UoeD1mdW5kcyx5PWpwbW9yZ2FuLGJ5PSJEYXRlIixhbGwueD1UUlVFKQ0KZnVuZHMgPSBtZXJnZSh4PWZ1bmRzLHk9YmFua21lbGxvbixieT0iRGF0ZSIsYWxsLng9VFJVRSkNCg0KIyDQv9C+0YDQsNGF0YPQstCw0YLQuCDRgNC10YLRg9GA0L3QuA0KdmFuZ3VhcmRfcmV0dXJuIDwtIHNhcHBseSgxOihucm93KGZ1bmRzKS0xKSwgZnVuY3Rpb24oeCwgcCkgeyByZXR1cm4oKHBbeCsxXSAtIHBbeF0pL3BbeF0pIH0sIGZ1bmRzJHZhbmd1YXJkX3ByaWNlKQ0KYmxhY2tyb2NrX3JldHVybiA8LSBzYXBwbHkoMToobnJvdyhmdW5kcyktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kcyRibGFja3JvY2spDQpzdGF0ZXN0cmVldF9yZXR1cm4gPC0gc2FwcGx5KDE6KG5yb3coZnVuZHMpLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgZnVuZHMkc3RhdGVzdHJlZXQpDQpqcG1vcmdhbl9yZXR1cm4gPC0gc2FwcGx5KDE6KG5yb3coZnVuZHMpLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgZnVuZHMkanBtb3JnYW4pDQpiYW5rbWVsbG9uX3JldHVybiA8LSBzYXBwbHkoMToobnJvdyhmdW5kcyktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kcyRiYW5rbWVsbG9uKQ0KDQojINC30ZbQsdGA0LDRgtC4INGA0LDQt9C+0Lwg0YDQtdGC0YPRgNC90LggNSDRhNC+0L3QtNGW0LINCmZ1bmRzID0gZnVuZHNbLTEsXQ0KRGF0ZSA9IGZ1bmRzJERhdGUNCmZ1bmRzX3JldHVybnMgPSBkYXRhLmZyYW1lKERhdGUsIHZhbmd1YXJkX3JldHVybiwgYmxhY2tyb2NrX3JldHVybiwgc3RhdGVzdHJlZXRfcmV0dXJuLCBqcG1vcmdhbl9yZXR1cm4sIGJhbmttZWxsb25fcmV0dXJuKQ0KDQojIE5hICAgINCe0LrRgNC10LzQviDQt9C90LDQudGC0Lgg0YDQtdGC0YPRgNC90Lgg0LTQu9GPIGFsbGlhbnoNCmFsbGlhbnpfcmV0dXJuIDwtIHNhcHBseSgxOihucm93KGFsbGlhbnopLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgYWxsaWFueiRDbG9zZSkNCmFsbGlhbnpfbSA9IGFsbGlhbnpbLTEsXQ0KRGF0ZSA9IGFsbGlhbnpfbSREYXRlDQphbGxpYW56X3JlID0gZGF0YS5mcmFtZShEYXRlLCBhbGxpYW56X3JldHVybikNCg0KIyDQt9GW0LHRgNCw0YLQuCDQstGB0ZYg0YDQtdGC0YPRgNC90Lgg0YDQsNC30L7QvA0KZnVuZHNfcmV0dXJucyA9IG1lcmdlKHg9ZnVuZHNfcmV0dXJucyx5PWFsbGlhbnpfcmUsYnk9IkRhdGUiLGFsbC54PVRSVUUpDQpWaWV3KGZ1bmRzX3JldHVybnMpDQpgYGANCg0KDQpgYGB7cn0NCndyaXRlLmNzdihmdW5kc19yZXR1cm5zLCBmaWxlID0gIkZ1bmRzLmNzdiIpDQpgYGANCg0KDQo=</div>
 
 
 
@@ -1810,7 +1881,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("filter_data.rmd");
+  window.initializeSourceEmbed("filter_data.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

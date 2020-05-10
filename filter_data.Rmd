@@ -14,6 +14,8 @@ allianz <- read.csv('ALV.DE.csv')
 jpmorgan <- read.csv('JPM.csv')
 bankmellon <- read.csv('BK.csv')
 
+allianz <- na.omit(allianz)  # видалити пропущені рядки
+
 # видалити зайві колонки
 vanguard <- select(vanguard, -c(Open,High,Low,Adj.Close,Volume))
 blackrock <- select(blackrock, -c(Open,High,Low,Adj.Close,Volume))
@@ -26,23 +28,41 @@ bankmellon <- select(bankmellon, -c(Open,High,Low,Adj.Close,Volume))
 colnames(vanguard)[2] <-"vanguard_price"
 colnames(blackrock)[2] <-"blackrock_price"
 colnames(statestreet)[2] <-"statestreet_price"
-colnames(allianz)[2] <-"allianz_price"
 colnames(jpmorgan)[2] <-"jpmorgan_price"
 colnames(bankmellon)[2] <-"bankmellon_price"
 
 # змерджити
-
 funds = merge(x=vanguard,y=blackrock,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=statestreet,by="Date",all.x=TRUE)
-funds = merge(x=funds,y=allianz,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=jpmorgan,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=bankmellon,by="Date",all.x=TRUE)
 
-#View(funds)
+# порахувати ретурни
+vanguard_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$vanguard_price)
+blackrock_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$blackrock)
+statestreet_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$statestreet)
+jpmorgan_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$jpmorgan)
+bankmellon_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$bankmellon)
+
+# зібрати разом ретурни 5 фондів
+funds = funds[-1,]
+Date = funds$Date
+funds_returns = data.frame(Date, vanguard_return, blackrock_return, statestreet_return, jpmorgan_return, bankmellon_return)
+
+# Na    Окремо знайти ретурни для allianz
+allianz_return <- sapply(1:(nrow(allianz)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, allianz$Close)
+allianz_m = allianz[-1,]
+Date = allianz_m$Date
+allianz_re = data.frame(Date, allianz_return)
+
+# зібрати всі ретурни разом
+funds_returns = merge(x=funds_returns,y=allianz_re,by="Date",all.x=TRUE)
+View(funds_returns)
 ```
 
+
 ```{r}
-write.csv(funds, file = "Funds.csv")
+write.csv(funds_returns, file = "Funds.csv")
 ```
 
 

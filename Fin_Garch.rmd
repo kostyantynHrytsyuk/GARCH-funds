@@ -64,4 +64,8 @@ allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1]
 
 # Hi, Khrystyna!
 ```
+```{r}
+View(allianz_ret_ma)
+```
+
 
