@@ -14,7 +14,7 @@ require(ggplot2)
 require(xts)
 require(rugarch)
 require(PerformanceAnalytics)
-require(quantmode)
+require(quantmod)
 ```
 
 ```{r}
@@ -25,6 +25,7 @@ read_funds <- function(lf) {
       if (cond) {
       temp <- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
       temp$Date <- as.Date(temp$Date)
+      temp$Close <- as.numeric(temp$Close)
       dfs[[f]] <- temp[,c(1,5)]
     }
   }
@@ -52,9 +53,12 @@ allianz <- funds[[1]]
 # Першим аргументом передаємо дані
 # Другий аргумент - order.by - це наші значення дати
 allianz <- xts(funds[[1]]$Close, order.by = as.Date(funds[[1]]$Date))
+allianz <- na.omit(allianz)
 # Метод для орбрахунку returns готовим рішенням
 # [-1] - щоб пропустити перше NA
-allianz_ret_pa <- CalculateReturns(allianz)[-1]
+
+allianz_ret_pa <- CalculateReturns(allianz)
+
 # Метод для орбрахунку returns вручну
 allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds[[1]]$Close)
 
