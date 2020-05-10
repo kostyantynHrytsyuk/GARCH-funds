@@ -24,6 +24,7 @@ read_funds <- function(lf) {
       cond <- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
       if (cond) {
       temp <- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
+      temp$Date <- as.Date(temp$Date)
       dfs[[f]] <- temp[,c(1,5)]
     }
   }
@@ -43,3 +44,19 @@ funds <- read_funds(list.files())
 names(funds) <- c('allianz', 'bankmellon' , 'blackrock', 'jpmorgan', 'statestreet', 
              'vanguard')
 ```
+
+```{r}
+# Формуємо дані для xts
+allianz <- funds[[1]]
+
+# Першим аргументом передаємо дані
+# Другий аргумент - order.by - це наші значення дати
+allianz <- xts(funds[[1]]$Close, order.by = as.Date(funds[[1]]$Date))
+# Метод для орбрахунку returns готовим рішенням
+# [-1] - щоб пропустити перше NA
+allianz_ret_pa <- CalculateReturns(allianz)[-1]
+# Метод для орбрахунку returns вручну
+allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds[[1]]$Close)
+
+```
+

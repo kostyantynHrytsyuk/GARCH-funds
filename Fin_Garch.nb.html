@@ -1751,24 +1751,90 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0d2QoKVxuXG5gYGAifQ== -->
-<pre class="r"><code>getwd()
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3NldHdkKCcuLycpXG5gYGAifQ== -->
+<pre class="r"><code>#setwd('./')</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiL2hvbWUva29zdHlhXCJcbiJ9 -->
-<pre><code>[1] &quot;/home/kostya&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdC5maWxlcygpXG5cbmBgYCJ9 -->
-<pre class="r"><code>list.files()
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShkcGx5cilcbmBgYCJ9 -->
+<pre class="r"><code>require(dplyr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQUxWLkRFLmNzdlwiIFwiQksuY3N2XCIgICAgIFwiQkxLLmNzdlwiICAgIFwiSlBNLmNzdlwiICAgIFwiTElDRU5TRVwiICAgIFwiUkVBRE1FLm1kXCIgIFwiU1RULmNzdlwiICAgXG5bOF0gXCJWVEkuY3N2XCIgICBcbiJ9 -->
-<pre><code>[1] &quot;ALV.DE.csv&quot; &quot;BK.csv&quot;     &quot;BLK.csv&quot;    &quot;JPM.csv&quot;    &quot;LICENSE&quot;    &quot;README.md&quot;  &quot;STT.csv&quot;   
-[8] &quot;VTI.csv&quot;   </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBkcGx5clxuUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RwbHlyJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tXG4gIHByaW50LnJvd3dpc2VfZGYgICAgIFxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>Loading required package: dplyr
+Registered S3 method overwritten by 'dplyr':
+  method           from
+  print.rowwise_df     
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShnZ3Bsb3QyKVxuYGBgIn0= -->
+<pre class="r"><code>require(ggplot2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBnZ3Bsb3QyXG5LZWVwIHVwIHRvIGRhdGUgd2l0aCBjaGFuZ2VzIGF0IGh0dHBzOi8vd3d3LnRpZHl2ZXJzZS5vcmcvYmxvZy9cbiJ9 -->
+<pre><code>Loading required package: ggplot2
+Keep up to date with changes at https://www.tidyverse.org/blog/</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZSh4dHMpXG5gYGAifQ== -->
+<pre class="r"><code>require(xts)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB4dHNcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogem9vXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJh6b2/igJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBhcy5EYXRlLCBhcy5EYXRlLm51bWVyaWNcblxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYeHRz4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpkcGx5cuKAmTpcblxuICAgIGZpcnN0LCBsYXN0XG4ifQ== -->
+<pre><code>Loading required package: xts
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+
+Attaching package: ‘xts’
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, last</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShydWdhcmNoKVxuYGBgIn0= -->
+<pre class="r"><code>require(rugarch)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBydWdhcmNoXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IHBhcmFsbGVsXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhydWdhcmNo4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6c3RhdHPigJk6XG5cbiAgICBzaWdtYVxuIn0= -->
+<pre><code>Loading required package: rugarch
+Loading required package: parallel
+
+Attaching package: ‘rugarch’
+
+The following object is masked from ‘package:stats’:
+
+    sigma</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShQZXJmb3JtYW5jZUFuYWx5dGljcylcbmBgYCJ9 -->
+<pre class="r"><code>require(PerformanceAnalytics)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBQZXJmb3JtYW5jZUFuYWx5dGljc1xuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYUGVyZm9ybWFuY2VBbmFseXRpY3PigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpncmFwaGljc+KAmTpcblxuICAgIGxlZ2VuZFxuIn0= -->
+<pre><code>Loading required package: PerformanceAnalytics
+
+Attaching package: ‘PerformanceAnalytics’
+
+The following object is masked from ‘package:graphics’:
+
+    legend</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZShxdWFudG1vZGUpXG5gYGAifQ== -->
+<pre class="r"><code>require(quantmode)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBxdWFudG1vZGVcbnRoZXJlIGlzIG5vIHBhY2thZ2UgY2FsbGVkIOKAmHF1YW50bW9kZeKAmVxuIn0= -->
+<pre><code>Loading required package: quantmode
+there is no package called ‘quantmode’</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1791,17 +1857,35 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnKVxuYmxhY2tyb2NrIDwtIHJlYWQuY3N2KCdCTEsuY3N2JylcbnN0YXRlc3RyZWV0IDwtIHJlYWQuY3N2KCdTVFQuY3N2JylcbmFsbGlhbnogPC0gcmVhZC5jc3YoJ0FMVi5ERS5jc3YnKVxuanBtb3JnYW4gPC0gcmVhZC5jc3YoJ0pQTS5jc3YnKVxuYmFua21lbGxvbiA8LSByZWFkLmNzdignQksuY3N2JylcbmBgYCJ9 -->
-<pre class="r"><code>vanguard &lt;- read.csv('VTI.csv')
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpXG5ibGFja3JvY2sgPC0gcmVhZC5jc3YoJ0JMSy5jc3YnKVxuc3RhdGVzdHJlZXQgPC0gcmVhZC5jc3YoJ1NUVC5jc3YnKVxuYWxsaWFueiA8LSByZWFkLmNzdignQUxWLkRFLmNzdicpXG5qcG1vcmdhbiA8LSByZWFkLmNzdignSlBNLmNzdicpXG5iYW5rbWVsbG9uIDwtIHJlYWQuY3N2KCdCSy5jc3YnKVxuXG5mdW5kcyA8LSByZWFkX2Z1bmRzKGxpc3QuZmlsZXMoKSlcbm5hbWVzKGZ1bmRzKSA8LSBjKCdhbGxpYW56JywgJ2JhbmttZWxsb24nICwgJ2JsYWNrcm9jaycsICdqcG1vcmdhbicsICdzdGF0ZXN0cmVldCcsIFxuICAgICAgICAgICAgICd2YW5ndWFyZCcpXG5gYGAifQ== -->
+<pre class="r"><code>vanguard &lt;- read.csv('VTI.csv', stringsAsFactors = FALSE)
 blackrock &lt;- read.csv('BLK.csv')
 statestreet &lt;- read.csv('STT.csv')
 allianz &lt;- read.csv('ALV.DE.csv')
 jpmorgan &lt;- read.csv('JPM.csv')
-bankmellon &lt;- read.csv('BK.csv')</code></pre>
+bankmellon &lt;- read.csv('BK.csv')
+
+funds &lt;- read_funds(list.files())
+names(funds) &lt;- c('allianz', 'bankmellon' , 'blackrock', 'jpmorgan', 'statestreet', 
+             'vanguard')</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxsLmVxdWFsKGFsbGlhbnpfcmV0X21hLCBjb3JlZGF0YShhbGxpYW56X3JldF9wYSkpXG5cbmBgYCJ9 -->
+<pre class="r"><code>all.equal(allianz_ret_ma, coredata(allianz_ret_pa))
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQXR0cmlidXRlczogPCB0YXJnZXQgaXMgTlVMTCwgY3VycmVudCBpcyBsaXN0ID5cIlxuWzJdIFwidGFyZ2V0IGlzIG51bWVyaWMsIGN1cnJlbnQgaXMgbWF0cml4XCIgICAgICAgICAgIFxuIn0= -->
+<pre><code>[1] &quot;Attributes: &lt; target is NULL, current is list &gt;&quot;
+[2] &quot;target is numeric, current is matrix&quot;           </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQojc2V0d2QoJy4vJykKYGBgCgpgYGB7cn0KcmVxdWlyZShkcGx5cikKcmVxdWlyZShnZ3Bsb3QyKQpyZXF1aXJlKHh0cykKcmVxdWlyZShydWdhcmNoKQpyZXF1aXJlKFBlcmZvcm1hbmNlQW5hbHl0aWNzKQpyZXF1aXJlKHF1YW50bW9kZSkKYGBgCgpgYGB7cn0KcmVhZF9mdW5kcyA8LSBmdW5jdGlvbihsZikgewogIGRmcyA8LSBsaXN0KCkKICBmb3IgKGYgaW4gMTpsZW5ndGgobGYpKSB7CiAgICAgIGNvbmQgPC0gc3Vic3RyKGxmW2ZdLCBuY2hhcihsZltmXSktMywgbmNoYXIobGZbZl0pKSA9PSAnLmNzdicKICAgICAgaWYgKGNvbmQpIHsKICAgICAgdGVtcCA8LSBkYXRhLmZyYW1lKHJlYWQuY3N2KGxmW2ZdLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpKQogICAgICBkZnNbW2ZdXSA8LSB0ZW1wWyxjKDEsNSldCiAgICB9CiAgfQogIHJldHVybihkZnMpCn0KYGBgCgpgYGB7cn0KdmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCmJsYWNrcm9jayA8LSByZWFkLmNzdignQkxLLmNzdicpCnN0YXRlc3RyZWV0IDwtIHJlYWQuY3N2KCdTVFQuY3N2JykKYWxsaWFueiA8LSByZWFkLmNzdignQUxWLkRFLmNzdicpCmpwbW9yZ2FuIDwtIHJlYWQuY3N2KCdKUE0uY3N2JykKYmFua21lbGxvbiA8LSByZWFkLmNzdignQksuY3N2JykKCmZ1bmRzIDwtIHJlYWRfZnVuZHMobGlzdC5maWxlcygpKQpuYW1lcyhmdW5kcykgPC0gYygnYWxsaWFueicsICdiYW5rbWVsbG9uJyAsICdibGFja3JvY2snLCAnanBtb3JnYW4nLCAnc3RhdGVzdHJlZXQnLCAKICAgICAgICAgICAgICd2YW5ndWFyZCcpCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQojc2V0d2QoJy4vJykKYGBgCgpgYGB7cn0KcmVxdWlyZShkcGx5cikKcmVxdWlyZShnZ3Bsb3QyKQpyZXF1aXJlKHh0cykKcmVxdWlyZShydWdhcmNoKQpyZXF1aXJlKFBlcmZvcm1hbmNlQW5hbHl0aWNzKQpyZXF1aXJlKHF1YW50bW9kZSkKYGBgCgpgYGB7cn0KcmVhZF9mdW5kcyA8LSBmdW5jdGlvbihsZikgewogIGRmcyA8LSBsaXN0KCkKICBmb3IgKGYgaW4gMTpsZW5ndGgobGYpKSB7CiAgICAgIGNvbmQgPC0gc3Vic3RyKGxmW2ZdLCBuY2hhcihsZltmXSktMywgbmNoYXIobGZbZl0pKSA9PSAnLmNzdicKICAgICAgaWYgKGNvbmQpIHsKICAgICAgdGVtcCA8LSBkYXRhLmZyYW1lKHJlYWQuY3N2KGxmW2ZdLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpKQogICAgICB0ZW1wJERhdGUgPC0gYXMuRGF0ZSh0ZW1wJERhdGUpCiAgICAgIGRmc1tbZl1dIDwtIHRlbXBbLGMoMSw1KV0KICAgIH0KICB9CiAgcmV0dXJuKGRmcykKfQpgYGAKCmBgYHtyfQp2YW5ndWFyZCA8LSByZWFkLmNzdignVlRJLmNzdicsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkKYmxhY2tyb2NrIDwtIHJlYWQuY3N2KCdCTEsuY3N2JykKc3RhdGVzdHJlZXQgPC0gcmVhZC5jc3YoJ1NUVC5jc3YnKQphbGxpYW56IDwtIHJlYWQuY3N2KCdBTFYuREUuY3N2JykKanBtb3JnYW4gPC0gcmVhZC5jc3YoJ0pQTS5jc3YnKQpiYW5rbWVsbG9uIDwtIHJlYWQuY3N2KCdCSy5jc3YnKQoKZnVuZHMgPC0gcmVhZF9mdW5kcyhsaXN0LmZpbGVzKCkpCm5hbWVzKGZ1bmRzKSA8LSBjKCdhbGxpYW56JywgJ2JhbmttZWxsb24nICwgJ2JsYWNrcm9jaycsICdqcG1vcmdhbicsICdzdGF0ZXN0cmVldCcsIAogICAgICAgICAgICAgJ3Zhbmd1YXJkJykKYGBgCgpgYGB7cn0KIyDQpNC+0YDQvNGD0ZTQvNC+INC00LDQvdGWINC00LvRjyB4dHMKYWxsaWFueiA8LSBmdW5kc1tbMV1dCgojINCf0LXRgNGI0LjQvCDQsNGA0LPRg9C80LXQvdGC0L7QvCDQv9C10YDQtdC00LDRlNC80L4g0LTQsNC90ZYKIyDQlNGA0YPQs9C40Lkg0LDRgNCz0YPQvNC10L3RgiAtIG9yZGVyLmJ5IC0g0YbQtSDQvdCw0YjRliDQt9C90LDRh9C10L3QvdGPINC00LDRgtC4CmFsbGlhbnogPC0geHRzKGZ1bmRzW1sxXV0kQ2xvc2UsIG9yZGVyLmJ5ID0gYXMuRGF0ZShmdW5kc1tbMV1dJERhdGUpKQojINCc0LXRgtC+0LQg0LTQu9GPINC+0YDQsdGA0LDRhdGD0L3QutGDIHJldHVybnMg0LPQvtGC0L7QstC40Lwg0YDRltGI0LXQvdC90Y/QvAojIFstMV0gLSDRidC+0LEg0L/RgNC+0L/Rg9GB0YLQuNGC0Lgg0L/QtdGA0YjQtSBOQQphbGxpYW56X3JldF9wYSA8LSBDYWxjdWxhdGVSZXR1cm5zKGFsbGlhbnopWy0xXQojINCc0LXRgtC+0LQg0LTQu9GPINC+0YDQsdGA0LDRhdGD0L3QutGDIHJldHVybnMg0LLRgNGD0YfQvdGDCmFsbGlhbnpfcmV0X21hIDwtIHNhcHBseSgxOihucm93KGZ1bmRzW1sxXV0pLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgZnVuZHNbWzFdXSRDbG9zZSkKCmBgYAoK</div>
 
 
 
