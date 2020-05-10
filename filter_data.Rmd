@@ -43,7 +43,10 @@ blackrock_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - 
 statestreet_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$statestreet)
 jpmorgan_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$jpmorgan)
 bankmellon_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$bankmellon)
+```
 
+
+```{r}
 # зібрати разом ретурни 5 фондів
 funds = funds[-1,]
 Date = funds$Date
@@ -57,7 +60,7 @@ allianz_re = data.frame(Date, allianz_return)
 
 # зібрати всі ретурни разом
 funds_returns = merge(x=funds_returns,y=allianz_re,by="Date",all.x=TRUE)
-View(funds_returns)
+#View(funds_returns)
 ```
 
 
@@ -73,16 +76,16 @@ library(scales)
 funds_returns$Date <- as.Date(funds_returns$Date)
 
 
-ggplot(funds_returns, aes(Date,vanguard_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Vanguard") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,vanguard_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Vanguard") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,blackrock_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Blackrock") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,blackrock_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Blackrock") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,statestreet_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Statestreet") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,statestreet_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Statestreet") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,jpmorgan_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Jpmorgan") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,jpmorgan_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Jpmorgan") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,bankmellon_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Bankmellon") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,bankmellon_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Bankmellon") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,allianz_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Allianz") + scale_x_date(labels = date_format("%Y-%m-%d"))
+ggplot(funds_returns, aes(Date,allianz_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Allianz") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 ```
 
