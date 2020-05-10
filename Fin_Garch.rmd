@@ -58,5 +58,6 @@ allianz_ret_pa <- CalculateReturns(allianz)[-1]
 # Метод для орбрахунку returns вручну
 allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds[[1]]$Close)
 
+# Hi, Khrystyna!
 ```
 
