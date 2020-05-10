@@ -83,6 +83,15 @@ xts_df_red <- xts_df['/202004']
 ```
 
 ```{r}
+vol_df <- data.frame()
+
+for (i in 1:6) {
+  temp <- rollapply(data = xts_df[,i], width = 22, FUN = 'sd.annualized', scale = 252)
+  vol_df <- cbind(vol_df, temp)
+}
+
+names(vol_df) <- sapply(names(vol_df), gsub, pattern = 'return', replacement = 'volatility')
+
 chart.RollingPerformance(R = xts_df$vanguard_return, width = 22, FUN = "sd.annualized",
                          scale = 252)
 
