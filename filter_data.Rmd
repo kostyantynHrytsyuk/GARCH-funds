@@ -65,4 +65,24 @@ View(funds_returns)
 write.csv(funds_returns, file = "Funds.csv")
 ```
 
+```{r}
+library(ggplot2) 
+library(scales)
+
+# візуалізація
+funds_returns$Date <- as.Date(funds_returns$Date)
+
+
+ggplot(funds_returns, aes(Date,vanguard_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Vanguard") + scale_x_date(labels = date_format("%Y-%m-%d"))
+
+ggplot(funds_returns, aes(Date,blackrock_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Blackrock") + scale_x_date(labels = date_format("%Y-%m-%d"))
+
+ggplot(funds_returns, aes(Date,statestreet_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Statestreet") + scale_x_date(labels = date_format("%Y-%m-%d"))
+
+ggplot(funds_returns, aes(Date,jpmorgan_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Jpmorgan") + scale_x_date(labels = date_format("%Y-%m-%d"))
+
+ggplot(funds_returns, aes(Date,bankmellon_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Bankmellon") + scale_x_date(labels = date_format("%Y-%m-%d"))
+
+ggplot(funds_returns, aes(Date,allianz_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Allianz") + scale_x_date(labels = date_format("%Y-%m-%d"))
+```
 
