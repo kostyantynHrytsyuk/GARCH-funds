@@ -1752,7 +1752,7 @@ summary {
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3NldHdkKCcuLycpXG5gYGAifQ== -->
-<pre class="r"><code>#setwd('./')</code></pre>
+<pre class="r"><code>#setwd(&#39;./&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1774,7 +1774,7 @@ require(quantmod)</code></pre>
 <pre class="r"><code>read_funds &lt;- function(lf) {
   dfs &lt;- list()
   for (f in 1:length(lf)) {
-      cond &lt;- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
+      cond &lt;- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == &#39;.csv&#39;
       if (cond) {
       temp &lt;- data.frame(read.csv(lf[f], stringsAsFactors = FALSE))
       temp$Date &lt;- as.Date(temp$Date)
@@ -1790,12 +1790,12 @@ require(quantmod)</code></pre>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFuZ3VhcmQgPC0gcmVhZC5jc3YoJ1ZUSS5jc3YnLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpXG5ibGFja3JvY2sgPC0gcmVhZC5jc3YoJ0JMSy5jc3YnKVxuc3RhdGVzdHJlZXQgPC0gcmVhZC5jc3YoJ1NUVC5jc3YnKVxuYWxsaWFueiA8LSByZWFkLmNzdignQUxWLkRFLmNzdicpXG5qcG1vcmdhbiA8LSByZWFkLmNzdignSlBNLmNzdicpXG5iYW5rbWVsbG9uIDwtIHJlYWQuY3N2KCdCSy5jc3YnKVxuXG5mdW5kcyA8LSByZWFkX2Z1bmRzKGxpc3QuZmlsZXMoKSlcbmBgYCJ9 -->
-<pre class="r"><code>vanguard &lt;- read.csv('VTI.csv', stringsAsFactors = FALSE)
-blackrock &lt;- read.csv('BLK.csv')
-statestreet &lt;- read.csv('STT.csv')
-allianz &lt;- read.csv('ALV.DE.csv')
-jpmorgan &lt;- read.csv('JPM.csv')
-bankmellon &lt;- read.csv('BK.csv')
+<pre class="r"><code>vanguard &lt;- read.csv(&#39;VTI.csv&#39;, stringsAsFactors = FALSE)
+blackrock &lt;- read.csv(&#39;BLK.csv&#39;)
+statestreet &lt;- read.csv(&#39;STT.csv&#39;)
+allianz &lt;- read.csv(&#39;ALV.DE.csv&#39;)
+jpmorgan &lt;- read.csv(&#39;JPM.csv&#39;)
+bankmellon &lt;- read.csv(&#39;BK.csv&#39;)
 
 funds &lt;- read_funds(list.files())</code></pre>
 <!-- rnb-source-end -->
@@ -1803,14 +1803,14 @@ funds &lt;- read_funds(list.files())</code></pre>
 <pre><code>NAs introduced by coercion</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXMoZnVuZHMpIDwtIGMoJ2FsbGlhbnonLCAnYmFua21lbGxvbicgLCAnYmxhY2tyb2NrJywgJ2pwbW9yZ2FuJywgJ3N0YXRlc3RyZWV0JywgXG4gICAgICAgICAgICAgJ3Zhbmd1YXJkJylcbmBgYCJ9 -->
-<pre class="r"><code>names(funds) &lt;- c('allianz', 'bankmellon' , 'blackrock', 'jpmorgan', 'statestreet', 
-             'vanguard')</code></pre>
+<pre class="r"><code>names(funds) &lt;- c(&#39;allianz&#39;, &#39;bankmellon&#39; , &#39;blackrock&#39;, &#39;jpmorgan&#39;, &#39;statestreet&#39;, 
+             &#39;vanguard&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyDQpNC+0YDQvNGD0ZTQvNC+INC00LDQvdGWINC00LvRjyB4dHNcbmFsbGlhbnogPC0gZnVuZHNbWzFdXVxuXG4jINCf0LXRgNGI0LjQvCDQsNGA0LPRg9C80LXQvdGC0L7QvCDQv9C10YDQtdC00LDRlNC80L4g0LTQsNC90ZZcbiMg0JTRgNGD0LPQuNC5INCw0YDQs9GD0LzQtdC90YIgLSBvcmRlci5ieSAtINGG0LUg0L3QsNGI0ZYg0LfQvdCw0YfQtdC90L3RjyDQtNCw0YLQuFxuYWxsaWFueiA8LSB4dHMoZnVuZHNbWzFdXSRDbG9zZSwgb3JkZXIuYnkgPSBhcy5EYXRlKGZ1bmRzW1sxXV0kRGF0ZSkpXG5hbGxpYW56IDwtIG5hLm9taXQoYWxsaWFueilcbiMg0JzQtdGC0L7QtCDQtNC70Y8g0L7RgNCx0YDQsNGF0YPQvdC60YMgcmV0dXJucyDQs9C+0YLQvtCy0LjQvCDRgNGW0YjQtdC90L3Rj9C8XG4jIFstMV0gLSDRidC+0LEg0L/RgNC+0L/Rg9GB0YLQuNGC0Lgg0L/QtdGA0YjQtSBOQVxuXG5hbGxpYW56X3JldF9wYSA8LSBDYWxjdWxhdGVSZXR1cm5zKGFsbGlhbnopXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyDQpNC+0YDQvNGD0ZTQvNC+INC00LDQvdGWINC00LvRjyB4dHNcbmFsbGlhbnogPC0gZnVuZHNbWzFdXVxuXG4jINCf0LXRgNGI0LjQvCDQsNGA0LPRg9C80LXQvdGC0L7QvCDQv9C10YDQtdC00LDRlNC80L4g0LTQsNC90ZZcbiMg0JTRgNGD0LPQuNC5INCw0YDQs9GD0LzQtdC90YIgLSBvcmRlci5ieSAtINGG0LUg0L3QsNGI0ZYg0LfQvdCw0YfQtdC90L3RjyDQtNCw0YLQuFxuYWxsaWFueiA8LSB4dHMoZnVuZHNbWzFdXSRDbG9zZSwgb3JkZXIuYnkgPSBhcy5EYXRlKGZ1bmRzW1sxXV0kRGF0ZSkpXG5hbGxpYW56IDwtIG5hLm9taXQoYWxsaWFueilcbiMg0JzQtdGC0L7QtCDQtNC70Y8g0L7RgNCx0YDQsNGF0YPQvdC60YMgcmV0dXJucyDQs9C+0YLQvtCy0LjQvCDRgNGW0YjQtdC90L3Rj9C8XG4jIFstMV0gLSDRidC+0LEg0L/RgNC+0L/Rg9GB0YLQuNGC0Lgg0L/QtdGA0YjQtSBOQVxuXG5hbGxpYW56X3JldF9wYSA8LSBDYWxjdWxhdGVSZXR1cm5zKGFsbGlhbnopXG5cbiMg0JzQtdGC0L7QtCDQtNC70Y8g0L7RgNCx0YDQsNGF0YPQvdC60YMgcmV0dXJucyDQstGA0YPRh9C90YNcbmFsbGlhbnpfcmV0X21hIDwtIHNhcHBseSgxOihucm93KGZ1bmRzW1sxXV0pLTEpLCBmdW5jdGlvbih4LCBwKSB7IHJldHVybigocFt4KzFdIC0gcFt4XSkvcFt4XSkgfSwgZnVuZHNbWzFdXSRDbG9zZSlcblxuIyBIaSwgS2hyeXN0eW5hIVxuYGBgIn0= -->
 <pre class="r"><code># Формуємо дані для xts
 allianz &lt;- funds[[1]]
 
@@ -1821,17 +1821,18 @@ allianz &lt;- na.omit(allianz)
 # Метод для орбрахунку returns готовим рішенням
 # [-1] - щоб пропустити перше NA
 
-allianz_ret_pa &lt;- CalculateReturns(allianz)</code></pre>
+allianz_ret_pa &lt;- CalculateReturns(allianz)
+
+# Метод для орбрахунку returns вручну
+allianz_ret_ma &lt;- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds[[1]]$Close)
+
+# Hi, Khrystyna!</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYC8uZGVmYXVsdGAocHIsIGxhZy54dHMocHIpKSA6IFxuICBub24tbnVtZXJpYyBhcmd1bWVudCB0byBiaW5hcnkgb3BlcmF0b3JcbiJ9 -->
-<pre><code>Error in `/.default`(pr, lag.xts(pr)) : 
-  non-numeric argument to binary operator</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKCmBgYHtyfQojc2V0d2QoJy4vJykKYGBgCgpgYGB7cn0KcmVxdWlyZShkcGx5cikKcmVxdWlyZShnZ3Bsb3QyKQpyZXF1aXJlKHh0cykKcmVxdWlyZShydWdhcmNoKQpyZXF1aXJlKFBlcmZvcm1hbmNlQW5hbHl0aWNzKQpyZXF1aXJlKHF1YW50bW9kKQpgYGAKCmBgYHtyfQpyZWFkX2Z1bmRzIDwtIGZ1bmN0aW9uKGxmKSB7CiAgZGZzIDwtIGxpc3QoKQogIGZvciAoZiBpbiAxOmxlbmd0aChsZikpIHsKICAgICAgY29uZCA8LSBzdWJzdHIobGZbZl0sIG5jaGFyKGxmW2ZdKS0zLCBuY2hhcihsZltmXSkpID09ICcuY3N2JwogICAgICBpZiAoY29uZCkgewogICAgICB0ZW1wIDwtIGRhdGEuZnJhbWUocmVhZC5jc3YobGZbZl0sIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkpCiAgICAgIHRlbXAkRGF0ZSA8LSBhcy5EYXRlKHRlbXAkRGF0ZSkKICAgICAgdGVtcCRDbG9zZSA8LSBhcy5udW1lcmljKHRlbXAkQ2xvc2UpCiAgICAgIGRmc1tbZl1dIDwtIHRlbXBbLGMoMSw1KV0KICAgIH0KICB9CiAgcmV0dXJuKGRmcykKfQpgYGAKCmBgYHtyfQp2YW5ndWFyZCA8LSByZWFkLmNzdignVlRJLmNzdicsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkKYmxhY2tyb2NrIDwtIHJlYWQuY3N2KCdCTEsuY3N2JykKc3RhdGVzdHJlZXQgPC0gcmVhZC5jc3YoJ1NUVC5jc3YnKQphbGxpYW56IDwtIHJlYWQuY3N2KCdBTFYuREUuY3N2JykKanBtb3JnYW4gPC0gcmVhZC5jc3YoJ0pQTS5jc3YnKQpiYW5rbWVsbG9uIDwtIHJlYWQuY3N2KCdCSy5jc3YnKQoKZnVuZHMgPC0gcmVhZF9mdW5kcyhsaXN0LmZpbGVzKCkpCm5hbWVzKGZ1bmRzKSA8LSBjKCdhbGxpYW56JywgJ2JhbmttZWxsb24nICwgJ2JsYWNrcm9jaycsICdqcG1vcmdhbicsICdzdGF0ZXN0cmVldCcsIAogICAgICAgICAgICAgJ3Zhbmd1YXJkJykKYGBgCgpgYGB7cn0KIyDQpNC+0YDQvNGD0ZTQvNC+INC00LDQvdGWINC00LvRjyB4dHMKYWxsaWFueiA8LSBmdW5kc1tbMV1dCgojINCf0LXRgNGI0LjQvCDQsNGA0LPRg9C80LXQvdGC0L7QvCDQv9C10YDQtdC00LDRlNC80L4g0LTQsNC90ZYKIyDQlNGA0YPQs9C40Lkg0LDRgNCz0YPQvNC10L3RgiAtIG9yZGVyLmJ5IC0g0YbQtSDQvdCw0YjRliDQt9C90LDRh9C10L3QvdGPINC00LDRgtC4CmFsbGlhbnogPC0geHRzKGZ1bmRzW1sxXV0kQ2xvc2UsIG9yZGVyLmJ5ID0gYXMuRGF0ZShmdW5kc1tbMV1dJERhdGUpKQphbGxpYW56IDwtIG5hLm9taXQoYWxsaWFueikKIyDQnNC10YLQvtC0INC00LvRjyDQvtGA0LHRgNCw0YXRg9C90LrRgyByZXR1cm5zINCz0L7RgtC+0LLQuNC8INGA0ZbRiNC10L3QvdGP0LwKIyBbLTFdIC0g0YnQvtCxINC/0YDQvtC/0YPRgdGC0LjRgtC4INC/0LXRgNGI0LUgTkEKCmFsbGlhbnpfcmV0X3BhIDwtIENhbGN1bGF0ZVJldHVybnMoYWxsaWFueikKCiMg0JzQtdGC0L7QtCDQtNC70Y8g0L7RgNCx0YDQsNGF0YPQvdC60YMgcmV0dXJucyDQstGA0YPRh9C90YMKYWxsaWFuel9yZXRfbWEgPC0gc2FwcGx5KDE6KG5yb3coZnVuZHNbWzFdXSktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kc1tbMV1dJENsb3NlKQoKIyBIaSwgS2hyeXN0eW5hIQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCmBgYHtyfQ0KI3NldHdkKCcuLycpDQpgYGANCg0KYGBge3J9DQpyZXF1aXJlKGRwbHlyKQ0KcmVxdWlyZShnZ3Bsb3QyKQ0KcmVxdWlyZSh4dHMpDQpyZXF1aXJlKHJ1Z2FyY2gpDQpyZXF1aXJlKFBlcmZvcm1hbmNlQW5hbHl0aWNzKQ0KcmVxdWlyZShxdWFudG1vZCkNCmBgYA0KDQpgYGB7cn0NCnJlYWRfZnVuZHMgPC0gZnVuY3Rpb24obGYpIHsNCiAgZGZzIDwtIGxpc3QoKQ0KICBmb3IgKGYgaW4gMTpsZW5ndGgobGYpKSB7DQogICAgICBjb25kIDwtIHN1YnN0cihsZltmXSwgbmNoYXIobGZbZl0pLTMsIG5jaGFyKGxmW2ZdKSkgPT0gJy5jc3YnDQogICAgICBpZiAoY29uZCkgew0KICAgICAgdGVtcCA8LSBkYXRhLmZyYW1lKHJlYWQuY3N2KGxmW2ZdLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpKQ0KICAgICAgdGVtcCREYXRlIDwtIGFzLkRhdGUodGVtcCREYXRlKQ0KICAgICAgdGVtcCRDbG9zZSA8LSBhcy5udW1lcmljKHRlbXAkQ2xvc2UpDQogICAgICBkZnNbW2ZdXSA8LSB0ZW1wWyxjKDEsNSldDQogICAgfQ0KICB9DQogIHJldHVybihkZnMpDQp9DQpgYGANCg0KYGBge3J9DQp2YW5ndWFyZCA8LSByZWFkLmNzdignVlRJLmNzdicsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSkNCmJsYWNrcm9jayA8LSByZWFkLmNzdignQkxLLmNzdicpDQpzdGF0ZXN0cmVldCA8LSByZWFkLmNzdignU1RULmNzdicpDQphbGxpYW56IDwtIHJlYWQuY3N2KCdBTFYuREUuY3N2JykNCmpwbW9yZ2FuIDwtIHJlYWQuY3N2KCdKUE0uY3N2JykNCmJhbmttZWxsb24gPC0gcmVhZC5jc3YoJ0JLLmNzdicpDQoNCmZ1bmRzIDwtIHJlYWRfZnVuZHMobGlzdC5maWxlcygpKQ0KbmFtZXMoZnVuZHMpIDwtIGMoJ2FsbGlhbnonLCAnYmFua21lbGxvbicgLCAnYmxhY2tyb2NrJywgJ2pwbW9yZ2FuJywgJ3N0YXRlc3RyZWV0JywgDQogICAgICAgICAgICAgJ3Zhbmd1YXJkJykNCmBgYA0KDQpgYGB7cn0NCiMg0KTQvtGA0LzRg9GU0LzQviDQtNCw0L3RliDQtNC70Y8geHRzDQphbGxpYW56IDwtIGZ1bmRzW1sxXV0NCg0KIyDQn9C10YDRiNC40Lwg0LDRgNCz0YPQvNC10L3RgtC+0Lwg0L/QtdGA0LXQtNCw0ZTQvNC+INC00LDQvdGWDQojINCU0YDRg9Cz0LjQuSDQsNGA0LPRg9C80LXQvdGCIC0gb3JkZXIuYnkgLSDRhtC1INC90LDRiNGWINC30L3QsNGH0LXQvdC90Y8g0LTQsNGC0LgNCmFsbGlhbnogPC0geHRzKGZ1bmRzW1sxXV0kQ2xvc2UsIG9yZGVyLmJ5ID0gYXMuRGF0ZShmdW5kc1tbMV1dJERhdGUpKQ0KYWxsaWFueiA8LSBuYS5vbWl0KGFsbGlhbnopDQojINCc0LXRgtC+0LQg0LTQu9GPINC+0YDQsdGA0LDRhdGD0L3QutGDIHJldHVybnMg0LPQvtGC0L7QstC40Lwg0YDRltGI0LXQvdC90Y/QvA0KIyBbLTFdIC0g0YnQvtCxINC/0YDQvtC/0YPRgdGC0LjRgtC4INC/0LXRgNGI0LUgTkENCg0KYWxsaWFuel9yZXRfcGEgPC0gQ2FsY3VsYXRlUmV0dXJucyhhbGxpYW56KVstMV0NCg0KIyDQnNC10YLQvtC0INC00LvRjyDQvtGA0LHRgNCw0YXRg9C90LrRgyByZXR1cm5zINCy0YDRg9GH0L3Rgw0KYWxsaWFuel9yZXRfbWEgPC0gc2FwcGx5KDE6KG5yb3coZnVuZHNbWzFdXSktMSksIGZ1bmN0aW9uKHgsIHApIHsgcmV0dXJuKChwW3grMV0gLSBwW3hdKS9wW3hdKSB9LCBmdW5kc1tbMV1dJENsb3NlKQ0KDQojIEhpLCBLaHJ5c3R5bmEhDQpgYGANCg0K</div>
 
 
 
