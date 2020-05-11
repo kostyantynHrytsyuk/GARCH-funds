@@ -58,50 +58,61 @@ allianz <- funds[,1]
 
 allianz_ret_pa <- CalculateReturns(allianz)[-1]
 
-# Hi, Khrystyna!
 ```
 
 ```{r}
-vol_df <- data.frame()
-  
-for (i in 1:6) {
-  temp <- rollapply(data = funds[,i], width = 22, FUN = 'sd.annualized', scale = 252)
-  
-  temp_mean <- mean(temp, na.rm = TRUE)
-  
-  p <- ggplot(temp, aes(x = index(temp), y = temp)) + 
-  geom_line(aes(color = 'Volatility')) +
-  geom_hline(aes(yintercept = temp_mean, color = 'Mean'),
-             size=.5, linetype='dashed') +
-  geom_text( aes( min(index(temp)) , temp_mean, label = round(temp_mean, 4), vjust = 2)) +
-  labs(x = 'Date', y = 'Volatility', title = names(funds)[i]) +
-  theme(plot.title = element_text(hjust = 0.5))
-  
-  suppressMessages(suppressWarnings(print(p)))
-  
-  if (nrow(vol_df) == 0) {
-    vol_df <- temp
-  } else {
-    vol_df <- cbind(vol_df, temp)    
-  } 
+get_volatiles <- function(funds, width = 22) {
+    vol_df <- data.frame()
+    funds_names <- c("Vanguard", "Blackrock", "Statestreet", 
+                     "JPmorgan", "Bankmellon", "Allianz")
+    for (i in 1:ncol(funds)) {
+      temp <- rollapply(data = funds[,i], width = 22, FUN = 'sd.annualized', scale = 252)
+      
+      if (nrow(vol_df) == 0) {
+        vol_df <- temp
+      } else {
+        vol_df <- cbind(vol_df, temp)    
+      }
 
+    }
+    names(vol_df) <- funds_names 
+    return(vol_df)
 }
 
-rm(temp, i)
+visualize_funds <- function(funds, y_axis_label = 'Volatility') {
+  
+  for (i in 1:ncol(funds)) {
+    temp <- funds[,i]  
+    temp_mean <- mean(temp, na.rm = TRUE)
+    
+    p <- ggplot(temp, aes(x = index(temp), y = temp)) + 
+    geom_line(aes(color = 'Volatility')) +
+    geom_hline(aes(yintercept = temp_mean, color = 'Mean'),
+               size=.5, linetype='dashed') +
+    geom_text( aes( min(index(temp)) , temp_mean, label = round(temp_mean, 4), vjust = 2)) +
+    labs(x = 'Date', y = y_axis_label, title = names(funds)[i]) +
+    theme(plot.title = element_text(hjust = 0.5))
+    
+    suppressMessages(suppressWarnings(print(p)))
+  }
+}
+```
 
-names(vol_df) <- sapply(names(vol_df), gsub, pattern = 'return', replacement = 'volatility')
+
+```{r}
+vol_df <- get_volatiles(funds)
+
+visualize_funds(vol_df)
 
 vanguard_tail_volatility <- tail(vol_df$vanguard_volatility, 6)
 
 ```
 
 ```{r}
-van_mean <- mean(funds$vanguard_return)
-van_errors <- funds$vanguard_return - van_mean
-
-plot(abs(van_errors))
-
-acf(abs(van_errors))
+plot_acf <- function(fund) {
+  f_mean <- mean(fund)
+  acf(abs(f_mean))
+}
 ```
 
 ```{r}
@@ -109,9 +120,15 @@ acf(abs(van_errors))
 
 # Forming set of parameters for GARCH model
 # The most important is distribution.model - we are specifying type of distribution 
-van_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+norm_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                        variance.model = list(model = 'sGARCH'),
                        distribution.model = 'norm')
+
+# garch_for_funds <- function(funds) {
+#   for (i in 1:ncol(funds)) {
+#     return()
+#   }
+# }
 
 # Apply GARCH model to our data 
 van_fit <- ugarchfit(data = funds_red$vanguard_return,
