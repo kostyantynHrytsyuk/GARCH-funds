@@ -38,29 +38,6 @@ read_funds <- function(lf) {
 ```
 
 ```{r}
-# Формуємо дані для xts
-allianz <- funds[[1]]
-
-# Першим аргументом передаємо дані
-# Другий аргумент - order.by - це наші значення дати
-allianz <- xts(funds[[1]]$Close, order.by = as.Date(funds[[1]]$Date))
-allianz <- na.omit(allianz)
-# Метод для орбрахунку returns готовим рішенням
-# [-1] - щоб пропустити перше NA
-
-allianz_ret_pa <- CalculateReturns(allianz)[-1]
-
-# Метод для орбрахунку returns вручну
-allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds[[1]]$Close)
-
-# Hi, Khrystyna!
-```
-
-```{r}
-View(allianz_ret_ma)
-```
-
-```{r}
 # Data loading
 df <- read.csv('Funds.csv', stringsAsFactors = F)
 df <- df[,-1]
@@ -74,6 +51,22 @@ rm(df)
 # Subseting original data for April of 2020 year
 funds_red <- funds['/202004']
 
+```
+
+```{r}
+# Формуємо дані для xts
+allianz <- funds[,1]
+
+# Першим аргументом передаємо дані
+# Другий аргумент - order.by - це наші значення дати
+# allianz <- xts(funds[[1]]$Close, order.by = as.Date(funds[[1]]$Date))
+# allianz <- na.omit(allianz)
+# Метод для орбрахунку returns готовим рішенням
+# [-1] - щоб пропустити перше NA
+
+allianz_ret_pa <- CalculateReturns(allianz)[-1]
+
+# Hi, Khrystyna!
 ```
 
 ```{r}
@@ -171,15 +164,15 @@ cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
 
 
 ```{r}
-vanguard_std <- (df$vanguard_return - mean(df$vanguard_return))/sd(df$vanguard_return)
+vanguard_std <- (funds$vanguard_return - mean(funds$vanguard_return))/sd(funds$vanguard_return)
 
-ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
-  stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
-                , aes(x = x,colour = 'Normal')) + ylab("") +
-  scale_y_continuous(breaks = NULL) +
-  stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2), 
-                aes(colour = 'Skewed Student t')) +
-  geom_histogram(data = data.frame(x = vanguard_std), aes(y = ..density..), bins = 100, alpha = 0.3)
+# ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
+#   stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
+#                 , aes(x = x,colour = 'Normal')) + ylab("") +
+#   scale_y_continuous(breaks = NULL) +
+#   stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2), 
+#                 aes(colour = 'Skewed Student t')) +
+#   geom_histogram(data = data.frame(x = vanguard_std), aes(y = ..density..), bins = 100, alpha = 0.3)
 
 ```
 
