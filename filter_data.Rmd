@@ -6,7 +6,7 @@ output: html_notebook
 ```{r}
 library(dplyr)
 
-# прочитати дані
+# read data
 vanguard <- read.csv('VTI.csv', stringsAsFactors = FALSE)
 blackrock <- read.csv('BLK.csv')
 statestreet <- read.csv('STT.csv')
@@ -14,9 +14,9 @@ allianz <- read.csv('ALV.DE.csv')
 jpmorgan <- read.csv('JPM.csv')
 bankmellon <- read.csv('BK.csv')
 
-allianz <- na.omit(allianz)  # видалити пропущені рядки
+allianz <- na.omit(allianz)  # remove omitted row
 
-# видалити зайві колонки
+# remove over columns
 vanguard <- select(vanguard, -c(Open,High,Low,Adj.Close,Volume))
 blackrock <- select(blackrock, -c(Open,High,Low,Adj.Close,Volume))
 statestreet <- select(statestreet, -c(Open,High,Low,Adj.Close,Volume))
@@ -24,20 +24,20 @@ allianz <- select(allianz, -c(Open,High,Low,Adj.Close,Volume))
 jpmorgan <- select(jpmorgan, -c(Open,High,Low,Adj.Close,Volume))
 bankmellon <- select(bankmellon, -c(Open,High,Low,Adj.Close,Volume))
 
-# перейменувати колонки
+# remane columns
 colnames(vanguard)[2] <-"vanguard_price"
 colnames(blackrock)[2] <-"blackrock_price"
 colnames(statestreet)[2] <-"statestreet_price"
 colnames(jpmorgan)[2] <-"jpmorgan_price"
 colnames(bankmellon)[2] <-"bankmellon_price"
 
-# змерджити
+# merge
 funds = merge(x=vanguard,y=blackrock,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=statestreet,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=jpmorgan,by="Date",all.x=TRUE)
 funds = merge(x=funds,y=bankmellon,by="Date",all.x=TRUE)
 
-# порахувати ретурни
+# calculate returns
 vanguard_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$vanguard_price)
 blackrock_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$blackrock)
 statestreet_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, funds$statestreet)
@@ -47,26 +47,47 @@ bankmellon_return <- sapply(1:(nrow(funds)-1), function(x, p) { return((p[x+1] -
 
 
 ```{r}
-# зібрати разом ретурни 5 фондів
+# merge returns for 5 funds
 funds = funds[-1,]
 Date = funds$Date
 funds_returns = data.frame(Date, vanguard_return, blackrock_return, statestreet_return, jpmorgan_return, bankmellon_return)
 
-# Na    Окремо знайти ретурни для allianz
+# Find returns for allianz
 allianz_return <- sapply(1:(nrow(allianz)-1), function(x, p) { return((p[x+1] - p[x])/p[x]) }, allianz$Close)
 allianz_m = allianz[-1,]
 Date = allianz_m$Date
 allianz_re = data.frame(Date, allianz_return)
 
-# зібрати всі ретурни разом
+# merge all
 funds_returns = merge(x=funds_returns,y=allianz_re,by="Date",all.x=TRUE)
-#View(funds_returns)
+View(funds_returns)
 ```
 
 
 ```{r}
 write.csv(funds_returns, file = "Funds.csv")
 ```
+
+```{r}
+#summary statistics
+#for returns
+summary(funds_returns)
+
+NROW(na.omit(funds_returns$vanguard_return))
+NROW(na.omit(funds_returns$blackrock_return))
+NROW(na.omit(funds_returns$statestreet_return))
+NROW(na.omit(funds_returns$jpmorgan_return))
+NROW(na.omit(funds_returns$bankmellon_return))
+NROW(na.omit(funds_returns$allianz_return))
+
+sd(funds_returns$vanguard_return)
+sd(funds_returns$blackrock_return)
+sd(funds_returns$statestreet_return)
+sd(funds_returns$jpmorgan_return)
+sd(funds_returns$bankmellon_return)
+sd(na.omit(funds_returns$allianz_return))
+```
+
 
 ```{r}
 library(ggplot2) 
@@ -76,16 +97,16 @@ library(scales)
 funds_returns$Date <- as.Date(funds_returns$Date)
 
 
-ggplot(funds_returns, aes(Date,vanguard_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Vanguard") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
+ggplot(funds_returns, aes(Date,vanguard_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Vanguard Total Stock Market Index Fund") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
 ggplot(funds_returns, aes(Date,blackrock_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Blackrock") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,statestreet_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Statestreet") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
+ggplot(funds_returns, aes(Date,statestreet_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "State Street Corporation") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,jpmorgan_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Jpmorgan") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
+ggplot(funds_returns, aes(Date,jpmorgan_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "JPMorgan Chase & Co.") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,bankmellon_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Bankmellon") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
+ggplot(funds_returns, aes(Date,bankmellon_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "The Bank of New York Mellon Corporation") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 
-ggplot(funds_returns, aes(Date,allianz_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Allianz") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
+ggplot(funds_returns, aes(Date,allianz_return))  + geom_point(color = "#00AFBB", size = 0.5) + geom_line(color = "#00AFBB", size = 0.5) + labs(x = "date", y = "Return per share", title = "Allianz SE") + scale_x_date(labels = date_format("%Y-%m-%d")) + theme(plot.title = element_text(hjust = 0.5))
 ```
 
