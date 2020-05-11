@@ -5,7 +5,8 @@ output: html_notebook
 
 
 ```{r}
-#setwd('./')
+getwd()
+list.files()
 ```
 
 ```{r}
@@ -21,6 +22,7 @@ library(skewt)
 ```{r}
 read_funds <- function(lf) {
   dfs <- list()
+ browser()
   for (f in 1:length(lf)) {
       cond <- substr(lf[f], nchar(lf[f])-3, nchar(lf[f])) == '.csv'
       if (cond) {
@@ -30,21 +32,9 @@ read_funds <- function(lf) {
       dfs[[f]] <- temp[,c(1,5)]
     }
   }
+ 
   return(dfs)
 }
-```
-
-```{r}
-vanguard <- read.csv('VTI.csv', stringsAsFactors = FALSE)
-blackrock <- read.csv('BLK.csv')
-statestreet <- read.csv('STT.csv')
-allianz <- read.csv('ALV.DE.csv')
-jpmorgan <- read.csv('JPM.csv')
-bankmellon <- read.csv('BK.csv')
-
-funds <- read_funds(list.files())
-names(funds) <- c('allianz', 'bankmellon' , 'blackrock', 'jpmorgan', 'statestreet', 
-             'vanguard')
 ```
 
 ```{r}
@@ -69,16 +59,20 @@ allianz_ret_ma <- sapply(1:(nrow(funds[[1]])-1), function(x, p) { return((p[x+1]
 ```{r}
 View(allianz_ret_ma)
 ```
+
 ```{r}
+# Data loading
 df <- read.csv('Funds.csv', stringsAsFactors = F)
 df <- df[,-1]
 df$Date <- as.Date(df$Date)
 
 # Transforming data from df to xts
-xts_df <- xts(df[,2:ncol(df)], order.by = df$Date)
+funds <- xts(df[,2:ncol(df)], order.by = df$Date)
+
+rm(df)
 
 # Subseting original data for April of 2020 year
-xts_df_red <- xts_df['/202004']
+funds_red <- funds['/202004']
 
 ```
 
@@ -86,17 +80,19 @@ xts_df_red <- xts_df['/202004']
 vol_df <- data.frame()
 
 for (i in 1:6) {
-  temp <- rollapply(data = xts_df[,i], width = 22, FUN = 'sd.annualized', scale = 252)
+  temp <- rollapply(data = funds[,i], width = 22, FUN = 'sd.annualized', scale = 252)
   vol_df <- cbind(vol_df, temp)
 }
 
+rm(temp, i)
+
 names(vol_df) <- sapply(names(vol_df), gsub, pattern = 'return', replacement = 'volatility')
 
-chart.RollingPerformance(R = xts_df$vanguard_return, width = 22, FUN = "sd.annualized",
+chart.RollingPerformance(R = funds$vanguard_return, width = 22, FUN = "sd.annualized",
                          scale = 252)
 
 
-alt_p <- rollapply(data = xts_df$vanguard_return, width = 22, FUN = 'sd.annualized', scale = 252)
+alt_p <- rollapply(data = funds$vanguard_return, width = 22, FUN = 'sd.annualized', scale = 252)
 
 vanguard_tail_volatility <- tail(alt_p, 6)
 vanguard_tail_volatility
@@ -105,8 +101,8 @@ ggplot(alt_p, aes(x = index(alt_p), y = vanguard_return)) + geom_line()
 ```
 
 ```{r}
-van_mean <- mean(xts_df$vanguard_return)
-van_errors <- xts_df$vanguard_return - van_mean
+van_mean <- mean(funds$vanguard_return)
+van_errors <- funds$vanguard_return - van_mean
 
 plot(abs(van_errors))
 
@@ -123,7 +119,7 @@ van_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                        distribution.model = 'norm')
 
 # Apply GARCH model to our data 
-van_fit <- ugarchfit(data = xts_df_red$vanguard_return,
+van_fit <- ugarchfit(data = funds_red$vanguard_return,
                      spec = van_spec)
 
 van_fit
@@ -146,7 +142,7 @@ van_sstd_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                             variance.model = list(model = 'sGARCH'),
                             distribution.model = 'sstd')
 
-van_sstd_fit <- ugarchfit(data = xts_df_red$vanguard_return,
+van_sstd_fit <- ugarchfit(data = funds_red$vanguard_return,
                           spec = van_sstd_spec)
 
 van_sstd_fit
