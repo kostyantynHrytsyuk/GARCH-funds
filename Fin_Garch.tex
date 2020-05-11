@@ -1,0 +1,1811 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={R Notebook},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{R Notebook}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: dplyr
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(xts)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: xts
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'xts'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     first, last
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(rugarch)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: rugarch
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: parallel
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'rugarch'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     sigma
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(PerformanceAnalytics)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: PerformanceAnalytics
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'PerformanceAnalytics'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:graphics':
+## 
+##     legend
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(quantmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: quantmod
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: TTR
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'quantmod':
+##   method            from
+##   as.zoo.data.frame zoo
+\end{verbatim}
+
+\begin{verbatim}
+## Version 0.4-0 included new data defaults. See ?getSymbols.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(skewt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{read_funds <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(lf) \{}
+\NormalTok{  dfs <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+ \KeywordTok{browser}\NormalTok{()}
+  \ControlFlowTok{for}\NormalTok{ (f }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(lf)) \{}
+\NormalTok{      cond <-}\StringTok{ }\KeywordTok{substr}\NormalTok{(lf[f], }\KeywordTok{nchar}\NormalTok{(lf[f])}\OperatorTok{-}\DecValTok{3}\NormalTok{, }\KeywordTok{nchar}\NormalTok{(lf[f])) }\OperatorTok{==}\StringTok{ '.csv'}
+      \ControlFlowTok{if}\NormalTok{ (cond) \{}
+\NormalTok{      temp <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(lf[f], }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{))}
+\NormalTok{      temp}\OperatorTok{$}\NormalTok{Date <-}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(temp}\OperatorTok{$}\NormalTok{Date)}
+\NormalTok{      temp}\OperatorTok{$}\NormalTok{Close <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(temp}\OperatorTok{$}\NormalTok{Close)}
+\NormalTok{      dfs[[f]] <-}\StringTok{ }\NormalTok{temp[,}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)]}
+\NormalTok{    \}}
+\NormalTok{  \}}
+ 
+  \KeywordTok{return}\NormalTok{(dfs)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Data loading}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{'Funds.csv'}\NormalTok{, }\DataTypeTok{stringsAsFactors =}\NormalTok{ F)}
+\NormalTok{df <-}\StringTok{ }\NormalTok{df[,}\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+\NormalTok{df}\OperatorTok{$}\NormalTok{Date <-}\StringTok{ }\KeywordTok{as.Date}\NormalTok{(df}\OperatorTok{$}\NormalTok{Date)}
+
+\CommentTok{# Transforming data from df to xts}
+\NormalTok{funds <-}\StringTok{ }\KeywordTok{xts}\NormalTok{(df[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(df)], }\DataTypeTok{order.by =}\NormalTok{ df}\OperatorTok{$}\NormalTok{Date)}
+
+\KeywordTok{rm}\NormalTok{(df)}
+
+\CommentTok{# Subseting original data for April of 2020 year}
+\NormalTok{funds_red <-}\StringTok{ }\NormalTok{funds[}\StringTok{'/202004'}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{allianz <-}\StringTok{ }\NormalTok{funds[,}\DecValTok{1}\NormalTok{]}
+
+
+\NormalTok{allianz_ret_pa <-}\StringTok{ }\KeywordTok{CalculateReturns}\NormalTok{(allianz)[}\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{# Hi, Khrystyna!}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vol_df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+  
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{) \{}
+\NormalTok{  temp <-}\StringTok{ }\KeywordTok{rollapply}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ funds[,i], }\DataTypeTok{width =} \DecValTok{22}\NormalTok{, }\DataTypeTok{FUN =} \StringTok{'sd.annualized'}\NormalTok{, }\DataTypeTok{scale =} \DecValTok{252}\NormalTok{)}
+  
+\NormalTok{  temp_mean <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(temp, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+  
+\NormalTok{  p <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(temp, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{index}\NormalTok{(temp), }\DataTypeTok{y =}\NormalTok{ temp)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \StringTok{'Volatility'}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{yintercept =}\NormalTok{ temp_mean, }\DataTypeTok{color =} \StringTok{'Mean'}\NormalTok{),}
+             \DataTypeTok{size=}\NormalTok{.}\DecValTok{5}\NormalTok{, }\DataTypeTok{linetype=}\StringTok{'dashed'}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{( }\KeywordTok{aes}\NormalTok{( }\KeywordTok{min}\NormalTok{(}\KeywordTok{index}\NormalTok{(temp)) , temp_mean, }\DataTypeTok{label =} \KeywordTok{round}\NormalTok{(temp_mean, }\DecValTok{4}\NormalTok{), }\DataTypeTok{vjust =} \DecValTok{2}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{'Date'}\NormalTok{, }\DataTypeTok{y =} \StringTok{'Volatility'}\NormalTok{, }\DataTypeTok{title =} \KeywordTok{names}\NormalTok{(funds)[i]) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+  
+  \KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{suppressWarnings}\NormalTok{(}\KeywordTok{print}\NormalTok{(p)))}
+  
+\NormalTok{  vol_df <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(vol_df, temp)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-1.pdf}
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-2.pdf}
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-3.pdf}
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-4.pdf}
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-5.pdf}
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-5-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(temp, i)}
+
+\KeywordTok{names}\NormalTok{(vol_df) <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\KeywordTok{names}\NormalTok{(vol_df), gsub, }\DataTypeTok{pattern =} \StringTok{'return'}\NormalTok{, }\DataTypeTok{replacement =} \StringTok{'volatility'}\NormalTok{)}
+
+\NormalTok{vanguard_tail_volatility <-}\StringTok{ }\KeywordTok{tail}\NormalTok{(vol_df}\OperatorTok{$}\NormalTok{vanguard_volatility, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{van_mean <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(funds}\OperatorTok{$}\NormalTok{vanguard_return)}
+\NormalTok{van_errors <-}\StringTok{ }\NormalTok{funds}\OperatorTok{$}\NormalTok{vanguard_return }\OperatorTok{-}\StringTok{ }\NormalTok{van_mean}
+
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{abs}\NormalTok{(van_errors))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <b5>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'чер 18' in 'mbcsToSbcs': dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 03' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 02' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 03' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 02' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 01' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'січ 03' in 'mbcsToSbcs': dot substituted for <87>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <b6>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <be>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'жов 02' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'лип 02' in 'mbcsToSbcs': dot substituted for <bf>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <ba>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'кві 01' in 'mbcsToSbcs': dot substituted for <96>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <d0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <80>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <d1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in axis(1, at = xycoords$x[axt], labels = names(axt), las = theme$las, :
+## conversion failure on 'гру 31' in 'mbcsToSbcs': dot substituted for <83>
+\end{verbatim}
+
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{acf}\NormalTok{(}\KeywordTok{abs}\NormalTok{(van_errors))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# In this chunk, prefix van_ - is for Vanguard company}
+
+\CommentTok{# Forming set of parameters for GARCH model}
+\CommentTok{# The most important is distribution.model - we are specifying type of distribution }
+\NormalTok{van_spec <-}\StringTok{ }\KeywordTok{ugarchspec}\NormalTok{(}\DataTypeTok{mean.model =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{armaOrder =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)),}
+                       \DataTypeTok{variance.model =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{model =} \StringTok{'sGARCH'}\NormalTok{),}
+                       \DataTypeTok{distribution.model =} \StringTok{'norm'}\NormalTok{)}
+
+\CommentTok{# Apply GARCH model to our data }
+\NormalTok{van_fit <-}\StringTok{ }\KeywordTok{ugarchfit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ funds_red}\OperatorTok{$}\NormalTok{vanguard_return,}
+                     \DataTypeTok{spec =}\NormalTok{ van_spec)}
+
+\NormalTok{van_fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics    
+## -----------------------------------
+## GARCH Model  : sGARCH(1,1)
+## Mean Model   : ARFIMA(0,0,0)
+## Distribution : norm 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000666    0.000113   5.8727 0.000000
+## omega   0.000002    0.000001   3.1680 0.001535
+## alpha1  0.123656    0.009874  12.5235 0.000000
+## beta1   0.856401    0.010647  80.4390 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000666    0.000095  7.04176   0.0000
+## omega   0.000002    0.000004  0.57278   0.5668
+## alpha1  0.123656    0.024258  5.09747   0.0000
+## beta1   0.856401    0.039710 21.56629   0.0000
+## 
+## LogLikelihood : 15447.87 
+## 
+## Information Criteria
+## ------------------------------------
+##                     
+## Akaike       -6.5068
+## Bayes        -6.5013
+## Shibata      -6.5068
+## Hannan-Quinn -6.5049
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      2.005  0.1568
+## Lag[2*(p+q)+(p+q)-1][2]     2.484  0.1937
+## Lag[4*(p+q)+(p+q)-1][5]     4.050  0.2479
+## d.o.f=0
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      1.630  0.2017
+## Lag[2*(p+q)+(p+q)-1][5]     5.063  0.1481
+## Lag[4*(p+q)+(p+q)-1][9]     6.377  0.2571
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]    0.9874 0.500 2.000  0.3204
+## ARCH Lag[5]    2.7887 1.440 1.667  0.3219
+## ARCH Lag[7]    3.2192 2.315 1.543  0.4732
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  25.5724
+## Individual Statistics:             
+## mu     0.1622
+## omega  1.3709
+## alpha1 0.3002
+## beta1  0.9171
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:          1.07 1.24 1.6
+## Individual Statistic:     0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value      prob sig
+## Sign Bias           3.4799 5.061e-04 ***
+## Negative Sign Bias  0.4792 6.318e-01    
+## Positive Sign Bias  2.1302 3.321e-02  **
+## Joint Effect       35.3189 1.043e-07 ***
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     163.1    6.219e-25
+## 2    30     192.3    5.102e-26
+## 3    40     222.2    1.683e-27
+## 4    50     239.6    6.404e-27
+## 
+## 
+## Elapsed time : 0.390609
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{van_vol <-}\StringTok{ }\KeywordTok{sigma}\NormalTok{(van_fit)}
+
+\CommentTok{# Predicting volatility for n.ahead periods}
+\NormalTok{van_forecast <-}\StringTok{ }\KeywordTok{ugarchforecast}\NormalTok{(}\DataTypeTok{fitORspec =}\NormalTok{ van_fit,}
+                               \DataTypeTok{data =}\NormalTok{ van_vol, }\DataTypeTok{n.ahead =} \DecValTok{6}\NormalTok{)}
+\NormalTok{van_forecast}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *------------------------------------*
+## *       GARCH Model Forecast         *
+## *------------------------------------*
+## Model: sGARCH
+## Horizon: 6
+## Roll Steps: 0
+## Out of Sample: 0
+## 
+## 0-roll forecast [T0=2020-04-30]:
+##        Series   Sigma
+## T+1 0.0006661 0.02117
+## T+2 0.0006661 0.02102
+## T+3 0.0006661 0.02087
+## T+4 0.0006661 0.02072
+## T+5 0.0006661 0.02057
+## T+6 0.0006661 0.02043
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 252 - number of working days in year}
+\NormalTok{van_norm_res <-}\StringTok{ }\KeywordTok{sigma}\NormalTok{(van_forecast) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{252}\NormalTok{)}
+\NormalTok{van_norm_res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     2020-04-30
+## T+1  0.3361028
+## T+2  0.3336722
+## T+3  0.3312727
+## T+4  0.3289042
+## T+5  0.3265662
+## T+6  0.3242585
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# distribution.model: sstd - Skewed Student t Distribution}
+\NormalTok{van_sstd_spec <-}\StringTok{ }\KeywordTok{ugarchspec}\NormalTok{(}\DataTypeTok{mean.model =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{armaOrder =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)),}
+                            \DataTypeTok{variance.model =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{model =} \StringTok{'sGARCH'}\NormalTok{),}
+                            \DataTypeTok{distribution.model =} \StringTok{'sstd'}\NormalTok{)}
+
+\NormalTok{van_sstd_fit <-}\StringTok{ }\KeywordTok{ugarchfit}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ funds_red}\OperatorTok{$}\NormalTok{vanguard_return,}
+                          \DataTypeTok{spec =}\NormalTok{ van_sstd_spec)}
+
+\NormalTok{van_sstd_fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics    
+## -----------------------------------
+## GARCH Model  : sGARCH(1,1)
+## Mean Model   : ARFIMA(0,0,0)
+## Distribution : sstd 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000606    0.000112  5.42481 0.000000
+## omega   0.000001    0.000002  0.79416 0.427104
+## alpha1  0.120933    0.031350  3.85748 0.000115
+## beta1   0.871791    0.029543 29.50895 0.000000
+## skew    0.888821    0.018548 47.91960 0.000000
+## shape   7.108462    1.118777  6.35378 0.000000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error   t value Pr(>|t|)
+## mu      0.000606    0.000164  3.691612 0.000223
+## omega   0.000001    0.000016  0.095045 0.924279
+## alpha1  0.120933    0.249618  0.484472 0.628051
+## beta1   0.871791    0.237367  3.672751 0.000240
+## skew    0.888821    0.057521 15.452063 0.000000
+## shape   7.108462    6.988717  1.017134 0.309090
+## 
+## LogLikelihood : 15561.41 
+## 
+## Information Criteria
+## ------------------------------------
+##                     
+## Akaike       -6.5538
+## Bayes        -6.5456
+## Shibata      -6.5538
+## Hannan-Quinn -6.5509
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                      1.916  0.1663
+## Lag[2*(p+q)+(p+q)-1][2]     2.398  0.2045
+## Lag[4*(p+q)+(p+q)-1][5]     3.978  0.2568
+## d.o.f=0
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.7925  0.3733
+## Lag[2*(p+q)+(p+q)-1][5]    3.3154  0.3525
+## Lag[4*(p+q)+(p+q)-1][9]    4.7396  0.4686
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]    0.4842 0.500 2.000  0.4865
+## ARCH Lag[5]    2.0708 1.440 1.667  0.4558
+## ARCH Lag[7]    2.9682 2.315 1.543  0.5196
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  159.4704
+## Individual Statistics:               
+## mu      0.08331
+## omega  25.62030
+## alpha1  0.58024
+## beta1   1.44046
+## skew    0.28835
+## shape   1.34956
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:          1.49 1.68 2.12
+## Individual Statistic:     0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value      prob sig
+## Sign Bias           3.4681 5.287e-04 ***
+## Negative Sign Bias  0.9704 3.319e-01    
+## Positive Sign Bias  2.4059 1.617e-02  **
+## Joint Effect       35.6071 9.067e-08 ***
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     58.70    6.201e-06
+## 2    30     68.94    4.222e-05
+## 3    40     75.25    4.348e-04
+## 4    50     92.51    1.714e-04
+## 
+## 
+## Elapsed time : 1.166157
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{van_sstd_vol <-}\StringTok{ }\KeywordTok{sigma}\NormalTok{(van_sstd_fit)}
+\KeywordTok{tail}\NormalTok{(van_sstd_vol, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  [,1]
+## 2020-04-17 0.03301709
+## 2020-04-20 0.03232061
+## 2020-04-21 0.03076295
+## 2020-04-22 0.03078248
+## 2020-04-23 0.02976416
+## 2020-04-24 0.02781776
+## 2020-04-27 0.02647300
+## 2020-04-28 0.02545337
+## 2020-04-29 0.02383211
+## 2020-04-30 0.02428053
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{van_sstd_forecast <-}\StringTok{ }\KeywordTok{ugarchforecast}\NormalTok{(}\DataTypeTok{fitORspec =}\NormalTok{ van_sstd_fit,}
+                                    \DataTypeTok{data =}\NormalTok{ van_sstd_vol, }\DataTypeTok{n.ahead =} \DecValTok{6}\NormalTok{)}
+
+\NormalTok{van_sstd_res <-}\StringTok{ }\KeywordTok{sigma}\NormalTok{(van_sstd_forecast) }\OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{252}\NormalTok{)}
+
+\KeywordTok{chart.Histogram}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(van_sstd_fit, }\DataTypeTok{standardize =}\NormalTok{ T),}
+                \DataTypeTok{methods =} \KeywordTok{c}\NormalTok{(}\StringTok{'add.normal'}\NormalTok{, }\StringTok{'add.density'}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{'SST for norm}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## SST for norm
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(vanguard_tail_volatility }\OperatorTok{-}\StringTok{ }\NormalTok{van_norm_res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2219409
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cat}\NormalTok{(}\StringTok{'}\CharTok{\textbackslash{}n}\StringTok{SST for sstd}\CharTok{\textbackslash{}n}\StringTok{'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## SST for sstd
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(vanguard_tail_volatility }\OperatorTok{-}\StringTok{ }\NormalTok{van_sstd_res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.006310044
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cbind}\NormalTok{(vanguard_tail_volatility, van_norm_res, van_sstd_res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            vanguard_volatility X2020.04.30 X2020.04.30.1
+## 2020-05-01           0.4284958   0.3361028     0.3681400
+## 2020-05-04           0.3888867   0.3336722     0.3673056
+## 2020-05-05           0.3859007   0.3312727     0.3664754
+## 2020-05-06           0.3793907   0.3289042     0.3656493
+## 2020-05-07           0.3082497   0.3265662     0.3648275
+## 2020-05-08           0.3117938   0.3242585     0.3640097
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vanguard_std <-}\StringTok{ }\NormalTok{(funds}\OperatorTok{$}\NormalTok{vanguard_return }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(funds}\OperatorTok{$}\NormalTok{vanguard_return))}\OperatorTok{/}\KeywordTok{sd}\NormalTok{(funds}\OperatorTok{$}\NormalTok{vanguard_return)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{10}\NormalTok{, }\DecValTok{10}\NormalTok{)), }\KeywordTok{aes}\NormalTok{(x)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =}\NormalTok{ dnorm, }\DataTypeTok{n =} \DecValTok{4800}\NormalTok{, }\DataTypeTok{args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mean =} \DecValTok{0}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{3}\NormalTok{)}
+\NormalTok{                , }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x,}\DataTypeTok{colour =} \StringTok{'Normal'}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \OtherTok{NULL}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_function}\NormalTok{(}\DataTypeTok{fun =}\NormalTok{ dskt,  }\DataTypeTok{n =} \DecValTok{4800}\NormalTok{, }\DataTypeTok{args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{df =} \DecValTok{100}\NormalTok{, }\DataTypeTok{gamma =} \FloatTok{1.2}\NormalTok{),}
+                \KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour =} \StringTok{'Skewed Student t'}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ vanguard_std, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ vanguard_std,}\DataTypeTok{y =}\NormalTok{ ..density..), }\DataTypeTok{bins =} \DecValTok{100}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: `mapping` is not used by stat_function()
+
+## Warning: `mapping` is not used by stat_function()
+\end{verbatim}
+
+\includegraphics{Fin_Garch_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\end{document}

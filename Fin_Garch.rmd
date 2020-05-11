@@ -1,13 +1,11 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
-
-
-```{r}
-getwd()
-list.files()
-```
 
 ```{r}
 require(dplyr)
@@ -54,15 +52,9 @@ funds_red <- funds['/202004']
 ```
 
 ```{r}
-# Формуємо дані для xts
+
 allianz <- funds[,1]
 
-# Першим аргументом передаємо дані
-# Другий аргумент - order.by - це наші значення дати
-# allianz <- xts(funds[[1]]$Close, order.by = as.Date(funds[[1]]$Date))
-# allianz <- na.omit(allianz)
-# Метод для орбрахунку returns готовим рішенням
-# [-1] - щоб пропустити перше NA
 
 allianz_ret_pa <- CalculateReturns(allianz)[-1]
 
@@ -71,26 +63,36 @@ allianz_ret_pa <- CalculateReturns(allianz)[-1]
 
 ```{r}
 vol_df <- data.frame()
-
+  
 for (i in 1:6) {
   temp <- rollapply(data = funds[,i], width = 22, FUN = 'sd.annualized', scale = 252)
-  vol_df <- cbind(vol_df, temp)
+  
+  temp_mean <- mean(temp, na.rm = TRUE)
+  
+  p <- ggplot(temp, aes(x = index(temp), y = temp)) + 
+  geom_line(aes(color = 'Volatility')) +
+  geom_hline(aes(yintercept = temp_mean, color = 'Mean'),
+             size=.5, linetype='dashed') +
+  geom_text( aes( min(index(temp)) , temp_mean, label = round(temp_mean, 4), vjust = 2)) +
+  labs(x = 'Date', y = 'Volatility', title = names(funds)[i]) +
+  theme(plot.title = element_text(hjust = 0.5))
+  
+  suppressMessages(suppressWarnings(print(p)))
+  
+  if (nrow(vol_df) == 0) {
+    vol_df <- temp
+  } else {
+    vol_df <- cbind(vol_df, temp)    
+  } 
+
 }
 
 rm(temp, i)
 
 names(vol_df) <- sapply(names(vol_df), gsub, pattern = 'return', replacement = 'volatility')
 
-chart.RollingPerformance(R = funds$vanguard_return, width = 22, FUN = "sd.annualized",
-                         scale = 252)
+vanguard_tail_volatility <- tail(vol_df$vanguard_volatility, 6)
 
-
-alt_p <- rollapply(data = funds$vanguard_return, width = 22, FUN = 'sd.annualized', scale = 252)
-
-vanguard_tail_volatility <- tail(alt_p, 6)
-vanguard_tail_volatility
-
-ggplot(alt_p, aes(x = index(alt_p), y = vanguard_return)) + geom_line()
 ```
 
 ```{r}
@@ -166,13 +168,13 @@ cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
 ```{r}
 vanguard_std <- (funds$vanguard_return - mean(funds$vanguard_return))/sd(funds$vanguard_return)
 
-# ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
-#   stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
-#                 , aes(x = x,colour = 'Normal')) + ylab("") +
-#   scale_y_continuous(breaks = NULL) +
-#   stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2), 
-#                 aes(colour = 'Skewed Student t')) +
-#   geom_histogram(data = data.frame(x = vanguard_std), aes(y = ..density..), bins = 100, alpha = 0.3)
+ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
+  stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
+                , aes(x = x,colour = 'Normal')) + ylab("") +
+  scale_y_continuous(breaks = NULL) +
+  stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2),
+                aes(colour = 'Skewed Student t')) +
+  geom_histogram(data = vanguard_std, aes(x = vanguard_std,y = ..density..), bins = 100, alpha = 0.3)
 
 ```
 
