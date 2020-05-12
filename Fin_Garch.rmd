@@ -154,7 +154,10 @@ sstd_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
 sstd_gjr_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                        variance.model = list(model = 'gjrGARCH'),
                        distribution.model = 'sstd')
+```
 
+
+```{r}
 # Apply GARCH model to our data 
 norm_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
                      spec = norm_garch_spec)
@@ -167,7 +170,41 @@ sstd_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
   
 sstd_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
                            spec = sstd_gjr_spec)
+```
 
+```{r}
+#Coefficients 
+cat('\nCoefficients of', 'Standard GARCH with normal distribution of errors','\n')
+print(round(norm_garch_fit@fit$matcoef,10))
+
+cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
+print(round(norm_garch_fit@fit$robust.matcoef,10))
+
+
+cat('\nCoefficients of', 'GJR GARCH with normal distribution of errors','\n')
+print(round(norm_gjr_fit@fit$matcoef,10))
+
+cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
+print(round(norm_gjr_fit@fit$robust.matcoef,10))
+
+
+cat('\nCoefficients of', 'Standard GARCH with skewed Student t distribution of errors','\n')
+print(round(sstd_garch_fit@fit$matcoef,10))
+
+cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
+print(round(sstd_garch_fit@fit$robust.matcoef,10))
+
+
+cat('\nCoefficients of', 'GJR GARCH with skewed Student t distribution of errors','\n')
+print(round(sstd_gjr_fit@fit$matcoef,10))
+
+cat('\nRobust coefficients of', 'GJR GARCH with normal distribution of errors','\n')
+print(round(sstd_gjr_fit@fit$robust.matcoef,10))
+```
+
+
+```{r}
+# Visualizing impact of negative previous return on variance
 norm_garch_news <- as.data.frame(newsimpact(norm_garch_fit)[1:2])
 norm_gjr_news <- as.data.frame(newsimpact(norm_gjr_fit) [1:2])
 sstd_garch_news <- as.data.frame(newsimpact(sstd_garch_fit)[1:2])
@@ -185,7 +222,11 @@ ggplot() +
   labs(x = 'Error', y = 'Variance', 
        title = 'Dependence of variance on errors in different models') +
   theme(plot.title = element_text(hjust = 0.5))
+```
 
+
+```{r}
+# Visualizing volatility
 norm_garch_vol <- sigma(norm_garch_fit)
 norm_gjr_vol <- sigma(norm_gjr_fit)
 sstd_garch_vol <- sigma(sstd_garch_fit)
@@ -212,15 +253,25 @@ p <- ggplot() +
 
 suppressMessages(suppressWarnings(print(p)))
 rm(p)
+```
 
+
+```{r}
 # Predicting volatility for n.ahead periods
-van_forecast <- ugarchforecast(fitORspec = van_fit,
-                               data = van_vol, n.ahead = 10)
-van_forecast
+norm_garch_forecast <- ugarchforecast(fitORspec = norm_garch_fit,
+                                      data = norm_garch_vol, n.ahead = 10)
+norm_gjr_forecast <- ugarchforecast(fitORspec = norm_gjr_fit,
+                                      data = norm_gjr_vol, n.ahead = 10)
+sstd_garch_forecast <- ugarchforecast(fitORspec = sstd_garch_fit,
+                                      data = sstd_garch_vol, n.ahead = 10)
+sstd_gjr_forecast <- ugarchforecast(fitORspec = sstd_gjr_fit,
+                                      data = sstd_gjr_vol, n.ahead = 10)
+```
 
+
+```{r}
 # 252 - number of working days in year
-van_norm_res <- sigma(van_forecast) #* sqrt(252)
-van_norm_res
+#van_norm_res <- sigma(van_forecast) #* sqrt(252)
 
 # garch_for_funds <- function(funds) {
 #   for (i in 1:ncol(funds)) {
@@ -231,49 +282,31 @@ van_norm_res
 ```
 
 ```{r}
-# distribution.model: sstd - Skewed Student t Distribution
-van_sstd_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
-                            variance.model = list(model = 'sGARCH'),
-                            distribution.model = 'sstd')
-
-van_sstd_fit <- ugarchfit(data = funds_red$vanguard_return,
-                          spec = van_sstd_spec)
-
-van_sstd_fit
-
-van_sstd_vol <- sigma(van_sstd_fit)
-tail(van_sstd_vol, 10)
-
-van_sstd_forecast <- ugarchforecast(fitORspec = van_sstd_fit,
-                                    data = van_sstd_vol, n.ahead = 10)
-
-van_sstd_res <- sigma(van_sstd_forecast) #* sqrt(252)
-
-chart.Histogram(residuals(van_sstd_fit, standardize = T),
-                methods = c('add.normal', 'add.density', 'add.student'))
+# chart.Histogram(residuals(van_sstd_fit, standardize = T),
+#                 methods = c('add.normal', 'add.density', 'add.student'))
 ```
 
 ```{r}
-cat('SST for norm\n')
-sum(vanguard_tail_volatility - van_norm_res)
-
-cat('\nSST for sstd\n')
-sum(vanguard_tail_volatility - van_sstd_res)
-
-cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
+# cat('SST for norm\n')
+# sum(vanguard_tail_volatility - van_norm_res)
+# 
+# cat('\nSST for sstd\n')
+# sum(vanguard_tail_volatility - van_sstd_res)
+# 
+# cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
 ```
 
 
 ```{r}
-vanguard_std <- (funds$vanguard_return - mean(funds$vanguard_return))/sd(funds$vanguard_return)
-
-ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
-  stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
-                , aes(x = x,colour = 'Normal')) + ylab("") +
-  scale_y_continuous(breaks = NULL) +
-  stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2),
-                aes(colour = 'Skewed Student t')) +
-  geom_histogram(data = vanguard_std, aes(x = vanguard_std,y = ..density..), bins = 100, alpha = 0.3)
+# vanguard_std <- (funds$vanguard_return - mean(funds$vanguard_return))/sd(funds$vanguard_return)
+# 
+# ggplot(data = data.frame(x = c(-10, 10)), aes(x)) +
+#   stat_function(fun = dnorm, n = 4800, args = list(mean = 0, sd = 3)
+#                 , aes(x = x,colour = 'Normal')) + ylab("") +
+#   scale_y_continuous(breaks = NULL) +
+#   stat_function(fun = dskt,  n = 4800, args = list(df = 100, gamma = 1.2),
+#                 aes(colour = 'Skewed Student t')) +
+#   geom_histogram(data = vanguard_std, aes(x = vanguard_std,y = ..density..), bins = 100, alpha = 0.3)
 
 ```
 
