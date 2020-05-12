@@ -55,15 +55,6 @@ funds_red <- funds['/202004']
 ```
 
 ```{r}
-
-allianz <- funds[,1]
-
-
-allianz_ret_pa <- CalculateReturns(allianz)[-1]
-
-```
-
-```{r}
 get_volatiles <- function(funds, width = 22, time_scale = 1, funds_names) {
     vol_df <- data.frame()
     
@@ -142,28 +133,85 @@ plot_acf <- function(fund) {
 fund <- funds$vanguard_return
 
 
-
-
-
-# Forming set of parameters for GARCH model
+# Forming set of parameters for different GARCH model
 # The most important is distribution.model - we are specifying type of distribution 
+# Standard GARCH with normal distribution of errors
 norm_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                        variance.model = list(model = 'sGARCH'),
                        distribution.model = 'norm')
 
-# garch_for_funds <- function(funds) {
-#   for (i in 1:ncol(funds)) {
-#     return()
-#   }
-# }
+# GJR GARCH with normal distribution of errors
+norm_gjr_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+                       variance.model = list(model = 'gjrGARCH'),
+                       distribution.model = 'norm')
+
+# Standard GARCH with skewed Student t distribution of errors
+sstd_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+                       variance.model = list(model = 'sGARCH'),
+                       distribution.model = 'sstd')
+
+# GJR GARCH with skewed Student t distribution of errors
+sstd_gjr_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
+                       variance.model = list(model = 'gjrGARCH'),
+                       distribution.model = 'sstd')
 
 # Apply GARCH model to our data 
-van_fit <- ugarchfit(data = funds_red$vanguard_return,
+norm_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
                      spec = norm_garch_spec)
 
-van_fit
+norm_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
+                     spec = norm_gjr_spec)
 
-van_vol <- sigma(van_fit)
+sstd_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
+                     spec = sstd_garch_spec)
+  
+sstd_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
+                           spec = sstd_gjr_spec)
+
+norm_garch_news <- as.data.frame(newsimpact(norm_garch_fit)[1:2])
+norm_gjr_news <- as.data.frame(newsimpact(norm_gjr_fit) [1:2])
+sstd_garch_news <- as.data.frame(newsimpact(sstd_garch_fit)[1:2])
+sstd_gjr_news <- as.data.frame(newsimpact(sstd_gjr_fit)[1:2])
+
+ggplot() + 
+  geom_point(data = norm_garch_news, 
+             aes(x = zx, y =zy, color = 'Normal GARCH')) +
+  geom_line(data = norm_gjr_news, 
+            aes(x = zx, y = zy, color = 'Normal GJR')) +
+  geom_line(data = sstd_garch_news, 
+            aes(x = zx, y = zy, color = 'Skewed t GARCH')) +
+  geom_line(data = sstd_gjr_news, 
+            aes(x = zx, y = zy, color = 'Skewed t GJR')) +
+  labs(x = 'Error', y = 'Variance', 
+       title = 'Dependence of variance on errors in different models') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+norm_garch_vol <- sigma(norm_garch_fit)
+norm_gjr_vol <- sigma(norm_gjr_fit)
+sstd_garch_vol <- sigma(sstd_garch_fit)
+sstd_gjr_vol <- sigma(sstd_gjr_fit)
+
+p <- ggplot() + 
+  geom_line(data = norm_garch_vol, aes(x = index(norm_garch_vol[,1]),
+                                       y = norm_garch_vol[,1],
+                                       color = 'Normal GARCH'), alpha = 0.2)+
+  geom_line(data = norm_gjr_vol, aes(x = index(norm_gjr_vol[,1]),
+                                     y = norm_gjr_vol[,1],
+                                     color = 'Normal GJR'), alpha = 0.2) +
+  geom_line(data = sstd_garch_vol, aes(x = index(sstd_garch_vol[,1]),
+                                       y = sstd_garch_vol[,1],
+                                       color = 'Skewed t GARCH'), alpha = 0.2) +
+  geom_line(data = sstd_gjr_vol, aes(x = index(sstd_gjr_vol[,1]),
+                                     y = sstd_gjr_vol[,1], 
+                                     color = 'Skewed t GJR'), alpha = 0.2) +
+  geom_line(data = vol_df[,1], aes(y = vol_df[,1], x = index(vol_df[,1]),
+                                   color = 'Actual volatility')) +
+  labs(x = 'Date', y = 'Volatility', 
+       title = 'Volatility constructed by different models') +
+  theme(plot.title = element_text(hjust = 0.5))
+
+suppressMessages(suppressWarnings(print(p)))
+rm(p)
 
 # Predicting volatility for n.ahead periods
 van_forecast <- ugarchforecast(fitORspec = van_fit,
@@ -173,6 +221,12 @@ van_forecast
 # 252 - number of working days in year
 van_norm_res <- sigma(van_forecast) #* sqrt(252)
 van_norm_res
+
+# garch_for_funds <- function(funds) {
+#   for (i in 1:ncol(funds)) {
+#     return()
+#   }
+# }
 
 ```
 
@@ -196,7 +250,7 @@ van_sstd_forecast <- ugarchforecast(fitORspec = van_sstd_fit,
 van_sstd_res <- sigma(van_sstd_forecast) #* sqrt(252)
 
 chart.Histogram(residuals(van_sstd_fit, standardize = T),
-                methods = c('add.normal', 'add.density'))
+                methods = c('add.normal', 'add.density', 'add.student'))
 ```
 
 ```{r}
