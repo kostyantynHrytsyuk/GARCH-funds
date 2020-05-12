@@ -154,110 +154,137 @@ sstd_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
 sstd_gjr_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
                        variance.model = list(model = 'gjrGARCH'),
                        distribution.model = 'sstd')
+
+garch_specs <- list(norm_garch_spec, norm_gjr_spec,
+                     sstd_garch_spec, sstd_gjr_spec)
+
+rm(norm_garch_spec, norm_gjr_spec, sstd_garch_spec, sstd_gjr_spec)
 ```
 
 
 ```{r}
-# Apply GARCH model to our data 
-norm_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
-                     spec = norm_garch_spec)
+# Models naming
+model_names <- c('Standard GARCH with normal distribution of errors',
+                         'GJR GARCH with normal distribution of errors',
+                         'Standard GARCH with skewed Student t distribution of errors',
+                         'GJR GARCH with skewed Student t distribution of errors')
 
-norm_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
-                     spec = norm_gjr_spec)
+short_model_names <- c('Normal GARCH', 'Normal GJR', 'Skewed t GARCH', 'Skewed t GJR')
 
-sstd_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
-                     spec = sstd_garch_spec)
-  
-sstd_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
-                           spec = sstd_gjr_spec)
+names(garch_specs) <- model_names
 ```
 
+
 ```{r}
+# Apply GARCH model to our data
+garch_fits <- list()
+
+for (s in 1:length(garch_specs)) {
+  suppressWarnings(garch_fits[s] <- ugarchfit(data = fund,
+                                              spec = garch_specs[[s]]))
+}
+rm(s)
+names(garch_fits) <- model_names
+
+# rm(norm_garch_fit, norm_gjr_fit, sstd_garch_fit, sstd_gjr_fit)
+
+# norm_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
+#                      spec = norm_garch_spec)
+# 
+# norm_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
+#                      spec = norm_gjr_spec)
+# 
+# sstd_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
+#                      spec = sstd_garch_spec)
+#   
+# sstd_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
+#                            spec = sstd_gjr_spec)
+```
+
+```{r}  
 #Coefficients 
-cat('\nCoefficients of', 'Standard GARCH with normal distribution of errors','\n')
-print(round(norm_garch_fit@fit$matcoef,10))
 
-cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
-print(round(norm_garch_fit@fit$robust.matcoef,10))
+for (f in 1:length(garch_fits)) {
+  cat('\nCoefficients of', names(garch_fits)[f], '\n')
+  print(round(garch_fits[[f]]@fit$matcoef,10))
 
-
-cat('\nCoefficients of', 'GJR GARCH with normal distribution of errors','\n')
-print(round(norm_gjr_fit@fit$matcoef,10))
-
-cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
-print(round(norm_gjr_fit@fit$robust.matcoef,10))
-
-
-cat('\nCoefficients of', 'Standard GARCH with skewed Student t distribution of errors','\n')
-print(round(sstd_garch_fit@fit$matcoef,10))
-
-cat('\nRobust coefficients of', 'Standard GARCH with normal distribution of errors','\n')
-print(round(sstd_garch_fit@fit$robust.matcoef,10))
-
-
-cat('\nCoefficients of', 'GJR GARCH with skewed Student t distribution of errors','\n')
-print(round(sstd_gjr_fit@fit$matcoef,10))
-
-cat('\nRobust coefficients of', 'GJR GARCH with normal distribution of errors','\n')
-print(round(sstd_gjr_fit@fit$robust.matcoef,10))
+  cat('\nRobust coefficients of', names(garch_fits)[f], '\n')
+  print(round(garch_fits[[f]]@fit$robust.matcoef,10))  
+}
 ```
 
 
 ```{r}
 # Visualizing impact of negative previous return on variance
-norm_garch_news <- as.data.frame(newsimpact(norm_garch_fit)[1:2])
-norm_gjr_news <- as.data.frame(newsimpact(norm_gjr_fit) [1:2])
-sstd_garch_news <- as.data.frame(newsimpact(sstd_garch_fit)[1:2])
-sstd_gjr_news <- as.data.frame(newsimpact(sstd_gjr_fit)[1:2])
 
-ggplot() + 
-  geom_point(data = norm_garch_news, 
-             aes(x = zx, y =zy, color = 'Normal GARCH')) +
-  geom_line(data = norm_gjr_news, 
-            aes(x = zx, y = zy, color = 'Normal GJR')) +
-  geom_line(data = sstd_garch_news, 
-            aes(x = zx, y = zy, color = 'Skewed t GARCH')) +
-  geom_line(data = sstd_gjr_news, 
-            aes(x = zx, y = zy, color = 'Skewed t GJR')) +
-  labs(x = 'Error', y = 'Variance', 
+
+p <- ggplot()
+
+for (f in 1:length(garch_fits)) {
+  garch_news <- as.data.frame(newsimpact(garch_fits[[f]])[1:2])
+  
+  model_name <- short_model_names[f]
+  model_name <- enquo(model_name)
+  
+  p <- p + geom_line(data = garch_news, 
+            aes(x = zx, y = zy, color = !!model_name))
+}
+
+p <- p + labs(x = 'Error', y = 'Variance', 
        title = 'Dependence of variance on errors in different models') +
   theme(plot.title = element_text(hjust = 0.5))
+
+print(p)
+
+rm(p, model_name, garch_news)
+
+# norm_garch_news <- as.data.frame(newsimpact(norm_garch_fit)[1:2])
+# norm_gjr_news <- as.data.frame(newsimpact(norm_gjr_fit) [1:2])
+# sstd_garch_news <- as.data.frame(newsimpact(sstd_garch_fit)[1:2])
+# sstd_gjr_news <- as.data.frame(newsimpact(sstd_gjr_fit)[1:2])
+
+# ggplot() + 
+#   geom_point(data = norm_garch_news, 
+#              aes(x = zx, y =zy, color = 'Normal GARCH')) +
+#   geom_line(data = norm_gjr_news, 
+#             aes(x = zx, y = zy, color = 'Normal GJR')) +
+#   geom_line(data = sstd_garch_news, 
+#             aes(x = zx, y = zy, color = 'Skewed t GARCH')) +
+#   geom_line(data = sstd_gjr_news, 
+#             aes(x = zx, y = zy, color = 'Skewed t GJR')) +
+  
 ```
 
 
 ```{r}
 # Visualizing volatility
-norm_garch_vol <- sigma(norm_garch_fit)
-norm_gjr_vol <- sigma(norm_gjr_fit)
-sstd_garch_vol <- sigma(sstd_garch_fit)
-sstd_gjr_vol <- sigma(sstd_gjr_fit)
+p <- ggplot()
+garch_vol <- list()
+for (f in 1:length(garch_fits)) {
+  garch_vol[[f]] <- sigma(garch_fits[[f]])
+  
+  model_name <- short_model_names[f]
+  model_name <- enquo(model_name)
+  
+  p <- p + geom_line(data = garch_vol[[f]], aes(x = index(garch_vol[[f]][,1]),
+                                       y = garch_vol[[f]][,1],
+                                       color = !!model_name), alpha = 0.2)
+}
+names(garch_vol) <- short_model_names
 
-p <- ggplot() + 
-  geom_line(data = norm_garch_vol, aes(x = index(norm_garch_vol[,1]),
-                                       y = norm_garch_vol[,1],
-                                       color = 'Normal GARCH'), alpha = 0.2)+
-  geom_line(data = norm_gjr_vol, aes(x = index(norm_gjr_vol[,1]),
-                                     y = norm_gjr_vol[,1],
-                                     color = 'Normal GJR'), alpha = 0.2) +
-  geom_line(data = sstd_garch_vol, aes(x = index(sstd_garch_vol[,1]),
-                                       y = sstd_garch_vol[,1],
-                                       color = 'Skewed t GARCH'), alpha = 0.2) +
-  geom_line(data = sstd_gjr_vol, aes(x = index(sstd_gjr_vol[,1]),
-                                     y = sstd_gjr_vol[,1], 
-                                     color = 'Skewed t GJR'), alpha = 0.2) +
-  geom_line(data = vol_df[,1], aes(y = vol_df[,1], x = index(vol_df[,1]),
+p <- p + geom_line(data = vol_df[,1], aes(y = vol_df[,1], x = index(vol_df[,1]),
                                    color = 'Actual volatility')) +
-  labs(x = 'Date', y = 'Volatility', 
-       title = 'Volatility constructed by different models') +
-  theme(plot.title = element_text(hjust = 0.5))
+     labs(x = 'Date', y = 'Volatility', 
+          title = 'Volatility constructed by different models') +
+     theme(plot.title = element_text(hjust = 0.5))
 
 suppressMessages(suppressWarnings(print(p)))
-rm(p)
+rm(p, f, model_name)
 ```
-
 
 ```{r}
 # Predicting volatility for n.ahead periods
+
 norm_garch_forecast <- ugarchforecast(fitORspec = norm_garch_fit,
                                       data = norm_garch_vol, n.ahead = 10)
 norm_gjr_forecast <- ugarchforecast(fitORspec = norm_gjr_fit,
