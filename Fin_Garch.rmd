@@ -117,8 +117,7 @@ vol_df <- get_volatiles(funds, funds_names =  funds_names)
 
 visualize_funds_lines(vol_df)
 visualize_funds_hist(funds)
-vanguard_tail_volatility <- tail(vol_df$Vanguard, 10)
-
+fund_tail_volatility <- tail(vol_df$Vanguard, 10)
 ```
 
 ```{r}
@@ -129,7 +128,6 @@ plot_acf <- function(fund) {
 ```
 
 ```{r}
-# In this chunk, prefix van_ - is for Vanguard company
 fund <- funds$vanguard_return
 
 
@@ -180,30 +178,38 @@ names(garch_specs) <- model_names
 garch_fits <- list()
 
 for (s in 1:length(garch_specs)) {
-  suppressWarnings(garch_fits[s] <- ugarchfit(data = fund,
+  suppressWarnings(garch_fits[[s]] <- ugarchfit(data = fund,
                                               spec = garch_specs[[s]]))
 }
 rm(s)
 names(garch_fits) <- model_names
-
-# rm(norm_garch_fit, norm_gjr_fit, sstd_garch_fit, sstd_gjr_fit)
-
-# norm_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
-#                      spec = norm_garch_spec)
-# 
-# norm_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
-#                      spec = norm_gjr_spec)
-# 
-# sstd_garch_fit <- ugarchfit(data = funds_red$vanguard_return,
-#                      spec = sstd_garch_spec)
-#   
-# sstd_gjr_fit <- ugarchfit(data = funds_red$vanguard_return,
-#                            spec = sstd_gjr_spec)
 ```
+
+```{r}
+# Visualizing standardized residuals for models
+for (f in 1:length(garch_fits)) {
+  chart.Histogram(residuals(garch_fits[[f]], standardize = T),
+                methods = c('add.normal', 'add.density'), 
+                main = paste('Standardized residuals of',model_names[f]))
+}
+```
+
+```{r}
+# Models validation
+for (f in 1:length(garch_fits)) {
+    standard_residuals <- residuals(garch_fits[[f]], standardize = T)
+    p <- acf(abs(standard_residuals),22, plot = F)
+    plot(p, main = names(garch_fits)[f])
+    cat('\n', names(garch_fits)[f],'\n')
+    print(Box.test(abs(standard_residuals), 22, type = 'Ljung-Box'))
+}
+
+rm(standard_residuals, p, f)
+```
+
 
 ```{r}  
 #Coefficients 
-
 for (f in 1:length(garch_fits)) {
   cat('\nCoefficients of', names(garch_fits)[f], '\n')
   print(round(garch_fits[[f]]@fit$matcoef,10))
@@ -213,11 +219,30 @@ for (f in 1:length(garch_fits)) {
 }
 ```
 
+```{r}
+# Models comparing
+model_comparison <- data.frame()
+
+for (f in 1:length(garch_fits)) {
+    temp <- data.frame()
+    temp[1,1] <- likelihood(garch_fits[[f]])
+    inf_criterion <- infocriteria(garch_fits[[f]])
+    
+    temp <- rbind(temp, inf_criterion)
+    
+    model_comparison <- c(model_comparison, temp)
+}
+model_comparison <- as.data.frame(model_comparison)
+
+rownames(model_comparison) <- c('Likelihood',rownames(inf_criterion))
+colnames(model_comparison) <- short_model_names
+model_comparison
+rm(f, temp, inf_criterion, model_comparison)
+```
+
 
 ```{r}
 # Visualizing impact of negative previous return on variance
-
-
 p <- ggplot()
 
 for (f in 1:length(garch_fits)) {
@@ -284,22 +309,32 @@ rm(p, f, model_name)
 
 ```{r}
 # Predicting volatility for n.ahead periods
-
-norm_garch_forecast <- ugarchforecast(fitORspec = norm_garch_fit,
-                                      data = norm_garch_vol, n.ahead = 10)
-norm_gjr_forecast <- ugarchforecast(fitORspec = norm_gjr_fit,
-                                      data = norm_gjr_vol, n.ahead = 10)
-sstd_garch_forecast <- ugarchforecast(fitORspec = sstd_garch_fit,
-                                      data = sstd_garch_vol, n.ahead = 10)
-sstd_gjr_forecast <- ugarchforecast(fitORspec = sstd_gjr_fit,
-                                      data = sstd_gjr_vol, n.ahead = 10)
+predict_results <- data.frame(fund_tail_volatility)
+garch_sst <- c()
+for (f in 1:length(garch_fits)) {
+  garch_forecast <- ugarchforecast(fitORspec = garch_fits[[f]],
+                                      data = garch_vol[[f]], n.ahead = 10)
+  
+  predict_results <- cbind(predict_results, sigma(garch_forecast))
+  
+  garch_sst[[f]] <- sum(fund_tail_volatility - sigma(garch_forecast))
+  names(garch_sst)[f] <- paste('TES for',short_model_names[f])
+  
+}
+names(predict_results)[2:ncol(predict_results)] <- short_model_names
+```
+```{r}
+# Total error sum for models
+garch_sst
 ```
 
 
 ```{r}
-# 252 - number of working days in year
-#van_norm_res <- sigma(van_forecast) #* sqrt(252)
+#Comparing predicted volatility for models with actual one
+predict_results
+```
 
+```{r}
 # garch_for_funds <- function(funds) {
 #   for (i in 1:ncol(funds)) {
 #     return()
@@ -307,22 +342,6 @@ sstd_gjr_forecast <- ugarchforecast(fitORspec = sstd_gjr_fit,
 # }
 
 ```
-
-```{r}
-# chart.Histogram(residuals(van_sstd_fit, standardize = T),
-#                 methods = c('add.normal', 'add.density', 'add.student'))
-```
-
-```{r}
-# cat('SST for norm\n')
-# sum(vanguard_tail_volatility - van_norm_res)
-# 
-# cat('\nSST for sstd\n')
-# sum(vanguard_tail_volatility - van_sstd_res)
-# 
-# cbind(vanguard_tail_volatility, van_norm_res, van_sstd_res)
-```
-
 
 ```{r}
 # vanguard_std <- (funds$vanguard_return - mean(funds$vanguard_return))/sd(funds$vanguard_return)
