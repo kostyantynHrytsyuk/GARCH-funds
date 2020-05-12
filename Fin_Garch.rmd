@@ -61,12 +61,14 @@ allianz_ret_pa <- CalculateReturns(allianz)[-1]
 ```
 
 ```{r}
-get_volatiles <- function(funds, width = 22) {
+get_volatiles <- function(funds, width = 22, time_scale = 1) {
+  browser()
     vol_df <- data.frame()
     funds_names <- c("Vanguard", "Blackrock", "Statestreet", 
                      "JPmorgan", "Bankmellon", "Allianz")
     for (i in 1:ncol(funds)) {
-      temp <- rollapply(data = funds[,i], width = 22, FUN = 'sd.annualized', scale = 252)
+      fund <- funds[,i]
+      temp <- rollapply(data = fund, width = 22, FUN = 'sd.annualized', scale = time_scale)
       
       if (nrow(vol_df) == 0) {
         vol_df <- temp
@@ -104,7 +106,7 @@ vol_df <- get_volatiles(funds)
 
 visualize_funds(vol_df)
 
-vanguard_tail_volatility <- tail(vol_df$vanguard_volatility, 6)
+vanguard_tail_volatility <- tail(vol_df$Vanguard, 6)
 
 ```
 
@@ -132,7 +134,7 @@ norm_garch_spec <- ugarchspec(mean.model = list(armaOrder = c(0,0)),
 
 # Apply GARCH model to our data 
 van_fit <- ugarchfit(data = funds_red$vanguard_return,
-                     spec = van_spec)
+                     spec = norm_garch_spec)
 
 van_fit
 
@@ -144,7 +146,7 @@ van_forecast <- ugarchforecast(fitORspec = van_fit,
 van_forecast
 
 # 252 - number of working days in year
-van_norm_res <- sigma(van_forecast) * sqrt(252)
+van_norm_res <- sigma(van_forecast) #* sqrt(252)
 van_norm_res
 ```
 
@@ -165,7 +167,7 @@ tail(van_sstd_vol, 10)
 van_sstd_forecast <- ugarchforecast(fitORspec = van_sstd_fit,
                                     data = van_sstd_vol, n.ahead = 6)
 
-van_sstd_res <- sigma(van_sstd_forecast) * sqrt(252)
+van_sstd_res <- sigma(van_sstd_forecast) #* sqrt(252)
 
 chart.Histogram(residuals(van_sstd_fit, standardize = T),
                 methods = c('add.normal', 'add.density'))
